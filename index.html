@@ -4,22 +4,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GREEN FACTORY</title>
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<title>GREEN FACTORY - PIXEL GAME</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Jua&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   min-height: 100vh;
   padding: 20px;
   font-family: 'Jua', sans-serif;
-  color: #263b32;
-  background: linear-gradient(#bce9f5, #e4f5d4 55%, #8bc77c);
+  color: #20352c;
+  background-color: #9bd5e8;
+  background-image:
+    linear-gradient(90deg, rgba(255,255,255,.15) 2px, transparent 2px),
+    linear-gradient(rgba(255,255,255,.15) 2px, transparent 2px),
+    linear-gradient(#9bd5e8, #d8efb7 58%, #83bd72);
+  background-size: 24px 24px, 24px 24px, auto;
 }
 
-.game { max-width: 1250px; margin: auto; }
+.game {
+  max-width: 1250px;
+  margin: auto;
+}
 
 header {
   display: flex;
@@ -27,54 +38,77 @@ header {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 h1 {
-  font-size: 36px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(17px, 2.5vw, 27px);
+  line-height: 1.7;
   margin: 0;
-  color: #176b48;
-  text-shadow: 2px 3px white;
+  color: #246b45;
+  text-shadow: 3px 3px 0 #fff3c9, 5px 5px 0 #477b50;
 }
 
 button {
-  border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  background: #267c52;
-  color: white;
+  border: 3px solid #244c38;
+  border-radius: 0;
+  padding: 13px 16px;
+  background: #4f9b62;
+  color: #fffbe5;
   font-family: inherit;
   font-size: 16px;
   cursor: pointer;
+  box-shadow: 0 5px 0 #244c38;
 }
 
-button:disabled { opacity: .6; cursor: default; }
+button:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #244c38;
+}
+
+button:disabled {
+  opacity: .65;
+  cursor: default;
+}
 
 #connectionStatus {
-  background: white;
+  display: inline-block;
+  border: 3px solid #365c43;
+  background: #fff3c9;
   padding: 10px 14px;
-  border-radius: 12px;
   font-size: 14px;
+  box-shadow: 0 4px 0 rgba(35,67,48,.25);
 }
 
 .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 18px;
 }
 
 .step {
-  background: #ffffffd9;
+  background: #f4f0c8;
   padding: 14px;
   text-align: center;
-  border-radius: 15px;
-  border: 3px solid #b6d7b5;
-  font-size: 19px;
+  border: 3px solid #477b50;
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(9px, 1.3vw, 13px);
+  line-height: 1.9;
+  box-shadow: 0 6px 0 rgba(35,67,48,.35);
 }
 
-.step.active { background: #fff2b9; border-color: #e6a92b; }
-.step.done { background: #c9f1c8; border-color: #55a65b; }
+.step.active {
+  background: #ffe28a;
+  border-color: #bd7d24;
+  box-shadow: 0 6px 0 #8b5b24;
+}
+
+.step.done {
+  background: #b9e6a2;
+  border-color: #397c4c;
+}
 
 .main {
   display: grid;
@@ -83,11 +117,10 @@ button:disabled { opacity: .6; cursor: default; }
 }
 
 .panel {
-  background: #ffffffed;
-  border: 3px solid #c2dfc0;
-  border-radius: 20px;
+  background: #fff8dc;
+  border: 3px solid #477b50;
   padding: 18px;
-  box-shadow: 0 5px 0 #76aa76;
+  box-shadow: 0 6px 0 rgba(35,67,48,.35);
 }
 
 .robot {
@@ -101,122 +134,201 @@ button:disabled { opacity: .6; cursor: default; }
 .robotFace {
   width: 115px;
   height: 115px;
-  background: #d8f2ed;
-  border: 5px solid #428c78;
-  border-radius: 30px;
+  background: #bce8d9;
+  border: 5px solid #315f52;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 65px;
   margin-bottom: 15px;
+  box-shadow: 5px 5px 0 rgba(35,67,48,.25);
 }
 
-.robot h2 { font-size: 21px; margin: 5px 0; }
+.robot h2 {
+  font-size: 18px;
+  margin: 5px 0 12px;
+}
 
 #robotMessage {
-  background: #fff3c4;
-  border-radius: 12px;
+  background: #fff0b7;
+  border: 3px solid #b58b43;
   padding: 12px;
-  line-height: 1.5;
+  line-height: 1.6;
   width: 100%;
   font-size: 15px;
+  box-shadow: 3px 3px 0 rgba(35,67,48,.18);
 }
 
-.center { display: flex; flex-direction: column; gap: 14px; }
+.center {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
 
 .factory {
-  background: linear-gradient(145deg, #d9f3d6, #a5d8a7);
-  border: 4px solid #5b9b67;
-  border-radius: 18px;
+  background-color: #b9e2a5;
+  background-image:
+    linear-gradient(90deg, rgba(255,255,255,.18) 2px, transparent 2px),
+    linear-gradient(rgba(255,255,255,.18) 2px, transparent 2px),
+    linear-gradient(145deg, #d9f3c6, #9bce8d);
+  background-size: 18px 18px, 18px 18px, auto;
+  border: 4px solid #397c4c;
   min-height: 235px;
   padding: 20px;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-shadow: 0 6px 0 rgba(35,67,48,.35);
 }
 
-#stageTitle { font-size: 28px; color: #205e3d; margin: 5px; }
-#factoryIcon { font-size: 75px; margin: 8px; }
-#mainMessage { font-size: 19px; margin: 5px; }
+#stageTitle {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(13px, 2vw, 20px);
+  line-height: 1.8;
+  color: #205e3d;
+  margin: 5px;
+}
 
-.progressBox { background: white; border-radius: 15px; padding: 15px; }
+#factoryIcon {
+  font-size: 75px;
+  margin: 8px;
+  filter: drop-shadow(4px 4px 0 rgba(32,73,48,.22));
+}
+
+#mainMessage {
+  font-size: 18px;
+  margin: 5px;
+  line-height: 1.7;
+}
+
+.progressBox {
+  background: #fff8dc;
+  border: 3px solid #477b50;
+  padding: 15px;
+  box-shadow: 0 6px 0 rgba(35,67,48,.35);
+}
 
 .progressTop {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 9px;
+  margin-bottom: 10px;
   font-size: 17px;
 }
 
 .progress {
-  height: 19px;
-  background: #e1e9df;
-  border-radius: 20px;
+  height: 22px;
+  background: #dce4c9;
+  border: 3px solid #477b50;
   overflow: hidden;
 }
 
 #progressBar {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #55b96b, #b1d943);
-  transition: width .3s;
+  background: repeating-linear-gradient(
+    90deg,
+    #4f9b62 0 12px,
+    #8bc85b 12px 24px
+  );
+  transition: width .3s steps(8);
 }
 
 .log {
   height: 100px;
   overflow-y: auto;
-  background: #203a32;
-  color: #bff4c7;
-  border-radius: 12px;
+  background: #1e382f;
+  color: #c7f4a9;
+  border: 3px solid #315344;
   padding: 12px;
   font-family: monospace;
   font-size: 12px;
   overflow-wrap: anywhere;
 }
 
-.stats { display: flex; flex-direction: column; gap: 12px; }
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .stat {
-  background: #fff2c6;
-  border: 2px solid #e5c66d;
-  border-radius: 15px;
+  background: #fff0b7;
+  border: 3px solid #b58b43;
   padding: 14px;
   text-align: center;
+  box-shadow: 0 5px 0 #9d793c;
 }
 
-.statTitle { font-size: 15px; color: #6c633e; }
-.statValue { font-size: 29px; color: #285a3c; margin-top: 5px; }
+.statTitle {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #6c5630;
+}
+
+.statValue {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(13px, 1.8vw, 20px);
+  line-height: 1.8;
+  color: #285a3c;
+  margin-top: 7px;
+}
 
 .timer {
-  background: #e1efff;
-  border: 2px solid #83b5e9;
-  border-radius: 15px;
+  background: #d8efff;
+  border: 3px solid #477aa3;
   padding: 14px;
   text-align: center;
+  box-shadow: 0 5px 0 #477aa3;
 }
 
-#timerValue { font-size: 38px; color: #28639a; }
+#timerValue {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 27px;
+  line-height: 1.8;
+  color: #28639a;
+}
+
+#timerMessage {
+  margin-top: 5px;
+}
 
 .bottom {
-  margin-top: 16px;
-  background: #ffffffdd;
+  margin-top: 18px;
+  background: #fff8dc;
+  border: 3px solid #477b50;
   padding: 14px;
-  border-radius: 15px;
   text-align: center;
   font-size: 14px;
+  line-height: 1.8;
+  box-shadow: 0 6px 0 rgba(35,67,48,.35);
 }
 
 @media(max-width: 800px) {
-  .main { grid-template-columns: 1fr; }
-  .robot { flex-direction: row; gap: 15px; }
+  .main {
+    grid-template-columns: 1fr;
+  }
+
+  .robot {
+    flex-direction: row;
+    gap: 15px;
+  }
+
   .robotFace {
     width: 80px;
     height: 80px;
     font-size: 45px;
     flex-shrink: 0;
   }
-  h1 { font-size: 28px; }
+
+  h1 {
+    font-size: 17px;
+  }
+
+  .step {
+    font-size: 8px;
+    padding: 10px 4px;
+  }
 }
 </style>
 </head>
@@ -244,11 +356,15 @@ button:disabled { opacity: .6; cursor: default; }
   <div class="robotFace" id="robotFace">🤖</div>
   <div>
     <h2>FACTORY ROBOT</h2>
-    <div id="robotMessage">아두이노를 연결하고<br>재활용 공정을 시작해 주세요!</div>
+    <div id="robotMessage">
+      아두이노를 연결하고<br>
+      재활용 공정을 시작해 주세요!
+    </div>
   </div>
 </section>
 
 <section class="center">
+
   <div class="factory">
     <div id="factoryIcon">🏭</div>
     <h2 id="stageTitle">플라스틱 분쇄 공정</h2>
@@ -272,9 +388,11 @@ button:disabled { opacity: .6; cursor: default; }
       아두이노 연결을 기다리는 중...
     </div>
   </div>
+
 </section>
 
 <section class="stats">
+
   <div class="stat">
     <div class="statTitle">분쇄 버튼 횟수</div>
     <div class="statValue" id="countValue">0 / 10</div>
@@ -300,8 +418,8 @@ button:disabled { opacity: .6; cursor: default; }
     <div id="timerValue">4.0</div>
     <div id="timerMessage">감지 대기 중</div>
   </div>
-</section>
 
+</section>
 </div>
 
 <div class="bottom">
@@ -370,19 +488,22 @@ function setStage(stage) {
   if (stage === 1) {
     $("stageTitle").textContent = "플라스틱 용융 공정";
     $("factoryIcon").textContent = "🌡️";
-    $("mainMessage").textContent = "기준 온도보다 1℃ 높아지면 다음 단계로 이동합니다.";
+    $("mainMessage").textContent =
+      "기준 온도보다 1℃ 높아지면 다음 단계로 이동합니다.";
   }
 
   if (stage === 2) {
     $("stageTitle").textContent = "플라스틱 압축 공정";
     $("factoryIcon").textContent = "🏭";
-    $("mainMessage").textContent = "센서 10cm 이내에서 물체를 4초간 유지하세요!";
+    $("mainMessage").textContent =
+      "센서 10cm 이내에서 물체를 4초간 유지하세요!";
   }
 
   if (stage === 3) {
     $("stageTitle").textContent = "재활용 공정 완료!";
     $("factoryIcon").textContent = "🏆";
-    $("mainMessage").textContent = "모든 재활용 공정이 완료되었습니다!";
+    $("mainMessage").textContent =
+      "모든 재활용 공정이 완료되었습니다!";
     robot("모든 재활용 공정이<br>완료되었습니다!", "🎉");
   }
 
@@ -391,8 +512,12 @@ function setStage(stage) {
 
 function startTimer() {
   pressStart = Date.now();
+
   $("timerMessage").textContent = "물체 감지 중!";
-  robot("초음파 센서가 물체를 감지했어요!<br>4초 동안 유지하세요.", "👀");
+  robot(
+    "초음파 센서가 물체를 감지했어요!<br>4초 동안 유지하세요.",
+    "👀"
+  );
 
   if (timerInterval) clearInterval(timerInterval);
 
@@ -404,7 +529,9 @@ function startTimer() {
 
     $("timerValue").textContent = remain.toFixed(1);
 
-    if (remain <= 0) clearInterval(timerInterval);
+    if (remain <= 0) {
+      clearInterval(timerInterval);
+    }
   }, 50);
 }
 
@@ -414,8 +541,13 @@ function cancelTimer() {
   if (timerInterval) clearInterval(timerInterval);
 
   $("timerValue").textContent = "4.0";
-  $("timerMessage").textContent = "감지가 끊겼습니다. 다시 시도하세요.";
-  robot("물체 감지가 끊겼어요.<br>다시 센서 가까이에 놓아 주세요.", "🤖");
+  $("timerMessage").textContent =
+    "감지가 끊겼습니다. 다시 시도하세요.";
+
+  robot(
+    "물체 감지가 끊겼어요.<br>다시 센서 가까이에 놓아 주세요.",
+    "🤖"
+  );
 }
 
 function completeGame() {
@@ -425,6 +557,7 @@ function completeGame() {
 
   $("timerValue").textContent = "완료!";
   $("timerMessage").textContent = "압축 공정 성공!";
+
   setStage(3);
   log("ALL PROCESS COMPLETE!");
 }
@@ -436,7 +569,10 @@ function processLine(line) {
   log(line);
 
   if (line === "SYSTEM_READY") {
-    robot("아두이노 연결 성공!<br>분쇄 공정을 시작하세요.", "🤖");
+    robot(
+      "아두이노 연결 성공!<br>분쇄 공정을 시작하세요.",
+      "🤖"
+    );
   }
 
   if (line === "STEP1_READY") {
@@ -459,21 +595,33 @@ function processLine(line) {
   if (line === "CRUSH_DONE") {
     $("countValue").textContent = "10 / 10";
     updateProgress();
-    robot("버튼 10회 입력 완료!<br>분쇄 공정이 끝났습니다.", "✅");
+
+    robot(
+      "버튼 10회 입력 완료!<br>분쇄 공정이 끝났습니다.",
+      "✅"
+    );
   }
 
   if (line === "STEP2_READY") {
     setStage(1);
-    robot("분쇄 완료!<br>용융 공정을 시작합니다.", "🌡️");
+
+    robot(
+      "분쇄 완료!<br>용융 공정을 시작합니다.",
+      "🌡️"
+    );
   }
 
   if (line.startsWith("TEMP:")) {
     const temp = parseFloat(line.split(":")[1]);
-    if (!isNaN(temp)) $("tempValue").textContent = temp.toFixed(1) + " ℃";
+
+    if (!isNaN(temp)) {
+      $("tempValue").textContent = temp.toFixed(1) + " ℃";
+    }
   }
 
   if (line.startsWith("BASE_TEMP:")) {
     const temp = parseFloat(line.split(":")[1]);
+
     if (!isNaN(temp)) {
       $("baseValue").textContent = temp.toFixed(1) + " ℃";
     }
@@ -481,8 +629,10 @@ function processLine(line) {
 
   if (line.startsWith("TARGET_TEMP:")) {
     const temp = parseFloat(line.split(":")[1]);
+
     if (!isNaN(temp)) {
       $("targetValue").textContent = temp.toFixed(1) + " ℃";
+
       $("mainMessage").textContent =
         "기준 온도 " + $("baseValue").textContent +
         " → 목표 온도 " + $("targetValue").textContent;
@@ -490,17 +640,28 @@ function processLine(line) {
   }
 
   if (line === "MELT_DONE") {
-    robot("목표 온도에 도달했습니다!<br>용융 공정 완료!", "🔥");
+    robot(
+      "목표 온도에 도달했습니다!<br>용융 공정 완료!",
+      "🔥"
+    );
   }
 
   if (line === "STEP3_READY") {
     setStage(2);
-    robot("이제 압축 공정입니다!<br>센서에 물체를 가까이 대세요.", "🏭");
+
+    robot(
+      "이제 압축 공정입니다!<br>센서에 물체를 가까이 대세요.",
+      "🏭"
+    );
   }
 
-  if (line === "PRESS_START") startTimer();
+  if (line === "PRESS_START") {
+    startTimer();
+  }
 
-  if (line === "PRESS_CANCEL") cancelTimer();
+  if (line === "PRESS_CANCEL") {
+    cancelTimer();
+  }
 
   if (line === "PROCESS_DONE" || line === "ALL_COMPLETE") {
     completeGame();
@@ -521,19 +682,28 @@ async function connectArduino() {
     $("connectBtn").textContent = "연결됨";
     $("connectBtn").disabled = true;
 
-    robot("아두이노 연결 성공!<br>게임을 시작합니다.", "🤖");
+    robot(
+      "아두이노 연결 성공!<br>게임을 시작합니다.",
+      "🤖"
+    );
 
     readSerial();
+
   } catch (error) {
     console.error(error);
+
     $("connectionStatus").textContent = "● 연결 실패";
-    alert("연결에 실패했습니다. 시리얼 모니터를 닫고 다시 시도해 주세요.");
+
+    alert(
+      "연결에 실패했습니다. 시리얼 모니터를 닫고 다시 시도해 주세요."
+    );
   }
 }
 
 async function readSerial() {
   const decoder = new TextDecoderStream();
   const closed = port.readable.pipeTo(decoder.writable);
+
   reader = decoder.readable.getReader();
 
   let buffer = "";
@@ -541,6 +711,7 @@ async function readSerial() {
   try {
     while (true) {
       const { value, done } = await reader.read();
+
       if (done) break;
 
       buffer += value;
@@ -552,14 +723,17 @@ async function readSerial() {
         processLine(line);
       }
     }
+
   } catch (error) {
     console.error(error);
     log("시리얼 읽기 오류");
+
   } finally {
     reader.releaseLock();
     await closed.catch(() => {});
   }
 }
 </script>
+
 </body>
 </html>

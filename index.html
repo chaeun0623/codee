@@ -4,11 +4,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GREEN FACTORY - PIXEL GAME</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Jua&display=swap" rel="stylesheet">
+<title>GREEN FACTORY - PIXEL EDITION</title>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
+:root {
+  --dark: #203b35;
+  --green: #397b50;
+  --light-green: #9bd477;
+  --yellow: #f6d66b;
+  --cream: #fff8df;
+  --blue: #91d6df;
+  --pixel-border: 4px solid var(--dark);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -16,19 +25,18 @@
 body {
   margin: 0;
   min-height: 100vh;
-  padding: 20px;
+  padding: 22px;
+  color: var(--dark);
   font-family: 'Jua', sans-serif;
-  color: #20352c;
-  background-color: #9bd5e8;
+  background-color: #9edbe5;
   background-image:
-    linear-gradient(90deg, rgba(255,255,255,.15) 2px, transparent 2px),
-    linear-gradient(rgba(255,255,255,.15) 2px, transparent 2px),
-    linear-gradient(#9bd5e8, #d8efb7 58%, #83bd72);
-  background-size: 24px 24px, 24px 24px, auto;
+    linear-gradient(90deg, transparent 95%, #ffffff25 95%),
+    linear-gradient(transparent 95%, #ffffff25 95%);
+  background-size: 32px 32px;
 }
 
 .game {
-  max-width: 1250px;
+  max-width: 1300px;
   margin: auto;
 }
 
@@ -37,34 +45,45 @@ header {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 14px;
   margin-bottom: 20px;
+  padding: 18px;
+  background: var(--cream);
+  border: var(--pixel-border);
+  box-shadow: 7px 7px 0 #31584b;
 }
 
 h1 {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(17px, 2.5vw, 27px);
-  line-height: 1.7;
   margin: 0;
-  color: #246b45;
-  text-shadow: 3px 3px 0 #fff3c9, 5px 5px 0 #477b50;
+  color: #267348;
+  font-size: 36px;
+  text-shadow: 3px 3px #b8df8d;
+  letter-spacing: 1px;
+}
+
+header > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 button {
-  border: 3px solid #244c38;
+  padding: 13px 18px;
+  border: 3px solid var(--dark);
   border-radius: 0;
-  padding: 13px 16px;
-  background: #4f9b62;
-  color: #fffbe5;
+  background: #f5ce59;
+  color: var(--dark);
   font-family: inherit;
-  font-size: 16px;
+  font-size: 17px;
+  box-shadow: 4px 4px 0 var(--dark);
   cursor: pointer;
-  box-shadow: 0 5px 0 #244c38;
+  transition: transform .1s, box-shadow .1s;
 }
 
-button:active:not(:disabled) {
-  transform: translateY(4px);
-  box-shadow: 0 1px 0 #244c38;
+button:hover:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--dark);
 }
 
 button:disabled {
@@ -74,53 +93,57 @@ button:disabled {
 
 #connectionStatus {
   display: inline-block;
-  border: 3px solid #365c43;
-  background: #fff3c9;
-  padding: 10px 14px;
+  padding: 10px;
+  background: #d5edbd;
+  border: 3px solid var(--dark);
   font-size: 14px;
-  box-shadow: 0 4px 0 rgba(35,67,48,.25);
+}
+
+.pixel-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  line-height: 1.8;
 }
 
 .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 18px;
 }
 
 .step {
-  background: #f4f0c8;
-  padding: 14px;
+  padding: 15px 8px;
   text-align: center;
-  border: 3px solid #477b50;
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(9px, 1.3vw, 13px);
-  line-height: 1.9;
-  box-shadow: 0 6px 0 rgba(35,67,48,.35);
+  background: #f9f0c9;
+  border: var(--pixel-border);
+  box-shadow: 5px 5px 0 #526f55;
+  font-size: 18px;
+  line-height: 1.6;
 }
 
 .step.active {
-  background: #ffe28a;
-  border-color: #bd7d24;
-  box-shadow: 0 6px 0 #8b5b24;
+  background: #ffe17a;
+  border-color: #a45d27;
+  box-shadow: 5px 5px 0 #a45d27;
+  transform: translateY(-3px);
 }
 
 .step.done {
-  background: #b9e6a2;
-  border-color: #397c4c;
+  background: #b9e78e;
 }
 
 .main {
   display: grid;
   grid-template-columns: 190px minmax(300px, 1fr) 245px;
-  gap: 15px;
+  gap: 16px;
 }
 
 .panel {
-  background: #fff8dc;
-  border: 3px solid #477b50;
-  padding: 18px;
-  box-shadow: 0 6px 0 rgba(35,67,48,.35);
+  padding: 17px;
+  background: var(--cream);
+  border: var(--pixel-border);
+  box-shadow: 6px 6px 0 #526f55;
 }
 
 .robot {
@@ -129,97 +152,318 @@ button:disabled {
   align-items: center;
   justify-content: center;
   text-align: center;
-}
-
-.robotFace {
-  width: 115px;
-  height: 115px;
-  background: #bce8d9;
-  border: 5px solid #315f52;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 65px;
-  margin-bottom: 15px;
-  box-shadow: 5px 5px 0 rgba(35,67,48,.25);
+  min-width: 0;
 }
 
 .robot h2 {
-  font-size: 18px;
-  margin: 5px 0 12px;
+  font-size: 19px;
+  margin: 10px 0;
+}
+
+/* 픽셀 로봇 */
+.robotFace {
+  width: 125px;
+  height: 135px;
+  position: relative;
+  margin: 12px auto 20px;
+  background: #76c9ba;
+  border: 5px solid var(--dark);
+  box-shadow:
+    7px 7px 0 #487d71,
+    inset -8px -8px 0 #4ca18e;
+  image-rendering: pixelated;
+}
+
+.robotFace::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 15px;
+  top: -20px;
+  left: 48px;
+  background: #f5ce59;
+  border: 4px solid var(--dark);
+  box-shadow: 0 -9px 0 -2px var(--dark);
+}
+
+.robotFace::after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 12px;
+  bottom: -19px;
+  left: 45px;
+  background: #315b54;
+  border: 3px solid var(--dark);
+}
+
+.robot-eye {
+  position: absolute;
+  width: 17px;
+  height: 22px;
+  top: 37px;
+  background: #fff9d8;
+  border: 3px solid var(--dark);
+  box-shadow: inset -4px -4px 0 #a2d9c8;
+}
+
+.robot-eye.left {
+  left: 23px;
+}
+
+.robot-eye.right {
+  right: 23px;
+}
+
+.robot-mouth {
+  position: absolute;
+  width: 35px;
+  height: 8px;
+  bottom: 28px;
+  left: 40px;
+  background: var(--dark);
+  box-shadow:
+    -5px -5px 0 -2px var(--dark),
+    5px -5px 0 -2px var(--dark);
+}
+
+.robot-body {
+  position: relative;
+  width: 75px;
+  height: 35px;
+  margin: -12px auto 0;
+  background: #e8bb58;
+  border: 4px solid var(--dark);
+  box-shadow: inset -7px -6px 0 #bd8740;
+}
+
+.robot-body::before,
+.robot-body::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  width: 12px;
+  height: 23px;
+  background: #76c9ba;
+  border: 3px solid var(--dark);
+}
+
+.robot-body::before {
+  left: -20px;
+}
+
+.robot-body::after {
+  right: -20px;
 }
 
 #robotMessage {
-  background: #fff0b7;
-  border: 3px solid #b58b43;
-  padding: 12px;
-  line-height: 1.6;
   width: 100%;
+  padding: 12px;
+  background: #fff0ad;
+  border: 3px solid var(--dark);
+  box-shadow: 4px 4px 0 #c49b44;
   font-size: 15px;
-  box-shadow: 3px 3px 0 rgba(35,67,48,.18);
+  line-height: 1.6;
 }
 
 .center {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 15px;
+  min-width: 0;
 }
 
+/* 픽셀 공장 배경 */
 .factory {
-  background-color: #b9e2a5;
-  background-image:
-    linear-gradient(90deg, rgba(255,255,255,.18) 2px, transparent 2px),
-    linear-gradient(rgba(255,255,255,.18) 2px, transparent 2px),
-    linear-gradient(145deg, #d9f3c6, #9bce8d);
-  background-size: 18px 18px, 18px 18px, auto;
-  border: 4px solid #397c4c;
-  min-height: 235px;
-  padding: 20px;
+  position: relative;
+  min-height: 300px;
+  padding: 20px 14px;
+  overflow: hidden;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-shadow: 0 6px 0 rgba(35,67,48,.35);
+  align-items: center;
+  background:
+    linear-gradient(#8dd5e1 0 55%, #b9df8a 55% 75%, #609b59 75%);
+  border: 5px solid var(--dark);
+  box-shadow: 7px 7px 0 #526f55;
+}
+
+.factory::before {
+  content: "";
+  position: absolute;
+  width: 55px;
+  height: 18px;
+  top: 35px;
+  left: 10%;
+  background: #fff8df;
+  box-shadow:
+    12px -12px 0 #fff8df,
+    24px 0 0 #fff8df,
+    12px 12px 0 #fff8df,
+    190px 20px 0 #fff8df,
+    202px 8px 0 #fff8df,
+    214px 20px 0 #fff8df;
+}
+
+.factory::after {
+  content: "";
+  position: absolute;
+  height: 35px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #447d4c;
+  border-top: 5px solid var(--dark);
+}
+
+/* 픽셀 기계 */
+#factoryIcon {
+  position: relative;
+  z-index: 2;
+  width: 170px;
+  height: 110px;
+  margin: 15px auto 20px;
+  background: #e3b84f;
+  border: 5px solid var(--dark);
+  box-shadow:
+    7px 7px 0 #795b32,
+    inset -9px -9px 0 #bd8c3d;
+}
+
+.machine-window {
+  position: absolute;
+  width: 65px;
+  height: 42px;
+  top: 15px;
+  left: 47px;
+  background: #80cbd1;
+  border: 5px solid var(--dark);
+  box-shadow: inset -7px -5px 0 #5b9fa6;
+}
+
+.machine-window::before,
+.machine-window::after {
+  content: "";
+  position: absolute;
+  background: var(--dark);
+}
+
+.machine-window::before {
+  width: 5px;
+  height: 32px;
+  left: 23px;
+  top: 0;
+}
+
+.machine-window::after {
+  width: 50px;
+  height: 5px;
+  left: 0;
+  top: 14px;
+}
+
+.machine-control {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  bottom: 12px;
+  left: 20px;
+  background: #6ebc67;
+  border: 3px solid var(--dark);
+  box-shadow: 25px 0 0 -3px #f4d05c;
+}
+
+.machine-belt {
+  position: absolute;
+  width: 220px;
+  height: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -28px;
+  background: #4a5750;
+  border: 4px solid var(--dark);
+  box-shadow: 0 8px 0 #293e38;
+}
+
+.machine-belt::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 3px;
+  width: 10px;
+  height: 5px;
+  background: #d4d8b2;
+  box-shadow:
+    35px 0 #d4d8b2,
+    70px 0 #d4d8b2,
+    105px 0 #d4d8b2,
+    140px 0 #d4d8b2,
+    175px 0 #d4d8b2;
 }
 
 #stageTitle {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(13px, 2vw, 20px);
-  line-height: 1.8;
-  color: #205e3d;
-  margin: 5px;
-}
-
-#factoryIcon {
-  font-size: 75px;
-  margin: 8px;
-  filter: drop-shadow(4px 4px 0 rgba(32,73,48,.22));
+  z-index: 2;
+  margin: 8px 0;
+  color: #173f32;
+  font-size: 26px;
+  text-shadow: 2px 2px #fff3bd;
 }
 
 #mainMessage {
-  font-size: 18px;
-  margin: 5px;
-  line-height: 1.7;
+  z-index: 2;
+  max-width: 90%;
+  margin: 5px 0 15px;
+  padding: 8px 12px;
+  background: #fff8df;
+  border: 3px solid var(--dark);
+  font-size: 17px;
+}
+
+/* 단계별 기계 색상 */
+.factory.stage-1 #factoryIcon {
+  background: #dc8d49;
+  box-shadow: 7px 7px 0 #80502f, inset -9px -9px 0 #b86c37;
+}
+
+.factory.stage-1 .machine-window {
+  background: #e6a94d;
+}
+
+.factory.stage-2 #factoryIcon {
+  background: #8baddc;
+  box-shadow: 7px 7px 0 #4c668b, inset -9px -9px 0 #6789ba;
+}
+
+.factory.stage-2 .machine-window {
+  background: #f3d16a;
+}
+
+.factory.stage-3 #factoryIcon {
+  background: #a5d879;
+  box-shadow: 7px 7px 0 #527a43, inset -9px -9px 0 #77b84f;
 }
 
 .progressBox {
-  background: #fff8dc;
-  border: 3px solid #477b50;
   padding: 15px;
-  box-shadow: 0 6px 0 rgba(35,67,48,.35);
+  background: var(--cream);
+  border: var(--pixel-border);
+  box-shadow: 5px 5px 0 #526f55;
 }
 
 .progressTop {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   margin-bottom: 10px;
   font-size: 17px;
 }
 
 .progress {
-  height: 22px;
-  background: #dce4c9;
-  border: 3px solid #477b50;
+  height: 25px;
+  background: #d4d9bd;
+  border: 4px solid var(--dark);
   overflow: hidden;
 }
 
@@ -228,21 +472,23 @@ button:disabled {
   height: 100%;
   background: repeating-linear-gradient(
     90deg,
-    #4f9b62 0 12px,
-    #8bc85b 12px 24px
+    #68b95d 0 15px,
+    #9bd477 15px 30px
   );
-  transition: width .3s steps(8);
+  transition: width .3s;
 }
 
 .log {
-  height: 100px;
+  height: 110px;
+  margin-top: 10px;
   overflow-y: auto;
-  background: #1e382f;
-  color: #c7f4a9;
-  border: 3px solid #315344;
   padding: 12px;
+  background: #1d352e;
+  color: #b8ed9d;
+  border: 3px solid #0d211b;
   font-family: monospace;
   font-size: 12px;
+  line-height: 1.7;
   overflow-wrap: anywhere;
 }
 
@@ -253,81 +499,131 @@ button:disabled {
 }
 
 .stat {
-  background: #fff0b7;
-  border: 3px solid #b58b43;
-  padding: 14px;
+  padding: 13px 8px;
   text-align: center;
-  box-shadow: 0 5px 0 #9d793c;
+  background: #fff0b4;
+  border: 3px solid var(--dark);
+  box-shadow: 4px 4px 0 #b18a42;
 }
 
 .statTitle {
   font-size: 14px;
-  line-height: 1.8;
-  color: #6c5630;
+  color: #5b5336;
 }
 
 .statValue {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(13px, 1.8vw, 20px);
-  line-height: 1.8;
-  color: #285a3c;
-  margin-top: 7px;
+  margin-top: 6px;
+  color: #285b3c;
+  font-size: 27px;
 }
 
 .timer {
-  background: #d8efff;
-  border: 3px solid #477aa3;
-  padding: 14px;
+  padding: 13px;
   text-align: center;
-  box-shadow: 0 5px 0 #477aa3;
+  background: #c5e9f1;
+  border: 3px solid var(--dark);
+  box-shadow: 4px 4px 0 #5b9eaa;
 }
 
 #timerValue {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 27px;
-  line-height: 1.8;
-  color: #28639a;
+  margin: 8px 0;
+  color: #245d79;
+  font-size: 38px;
 }
 
 #timerMessage {
-  margin-top: 5px;
+  font-size: 13px;
 }
 
 .bottom {
-  margin-top: 18px;
-  background: #fff8dc;
-  border: 3px solid #477b50;
-  padding: 14px;
+  margin-top: 20px;
+  padding: 17px;
   text-align: center;
-  font-size: 14px;
-  line-height: 1.8;
-  box-shadow: 0 6px 0 rgba(35,67,48,.35);
+  background: var(--cream);
+  border: var(--pixel-border);
+  box-shadow: 5px 5px 0 #526f55;
+  font-size: 15px;
+  line-height: 1.7;
 }
 
-@media(max-width: 800px) {
+@media(max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .robot {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .robotFace {
+    flex-shrink: 0;
+  }
+
+  .stats {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .timer {
+    grid-column: 1 / -1;
+  }
+}
+
+@media(max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
+  header {
+    padding: 12px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+
+  .steps {
+    gap: 6px;
+  }
+
+  .step {
+    font-size: 14px;
+    padding: 10px 4px;
+  }
+
   .main {
     grid-template-columns: 1fr;
   }
 
   .robot {
+    grid-column: auto;
     flex-direction: row;
-    gap: 15px;
   }
 
   .robotFace {
-    width: 80px;
-    height: 80px;
-    font-size: 45px;
-    flex-shrink: 0;
+    width: 90px;
+    height: 100px;
+    transform: scale(.85);
+    margin: 0;
   }
 
-  h1 {
-    font-size: 17px;
+  .stats {
+    grid-column: auto;
   }
 
-  .step {
-    font-size: 8px;
-    padding: 10px 4px;
+  .factory {
+    min-height: 290px;
+  }
+
+  #stageTitle {
+    font-size: 22px;
+  }
+
+  #mainMessage {
+    font-size: 15px;
   }
 }
 </style>
@@ -353,20 +649,32 @@ button:disabled {
 <div class="main">
 
 <section class="panel robot">
-  <div class="robotFace" id="robotFace">🤖</div>
+  <div>
+    <div class="robotFace" id="robotFace">
+      <div class="robot-eye left"></div>
+      <div class="robot-eye right"></div>
+      <div class="robot-mouth"></div>
+    </div>
+    <div class="robot-body"></div>
+  </div>
+
   <div>
     <h2>FACTORY ROBOT</h2>
     <div id="robotMessage">
-      아두이노를 연결하고<br>
-      재활용 공정을 시작해 주세요!
+      아두이노를 연결하고<br>재활용 공정을 시작해 주세요!
     </div>
   </div>
 </section>
 
 <section class="center">
 
-  <div class="factory">
-    <div id="factoryIcon">🏭</div>
+  <div class="factory" id="factory">
+    <div id="factoryIcon">
+      <div class="machine-window"></div>
+      <div class="machine-control"></div>
+      <div class="machine-belt"></div>
+    </div>
+
     <h2 id="stageTitle">플라스틱 분쇄 공정</h2>
     <div id="mainMessage">버튼을 정확히 10번 눌러 주세요!</div>
   </div>
@@ -424,6 +732,8 @@ button:disabled {
 
 <div class="bottom">
   GREEN FACTORY : 플라스틱 분쇄 → 용융 → 압축 → 재활용 완성
+  <br>
+  <span class="pixel-label">RECYCLE THE FUTURE!</span>
 </div>
 
 </div>
@@ -445,9 +755,29 @@ function log(message) {
   box.scrollTop = box.scrollHeight;
 }
 
-function robot(message, face = "🤖") {
+/* 로봇의 표정과 메시지 변경 */
+function robot(message, face = "normal") {
   $("robotMessage").innerHTML = message;
-  $("robotFace").textContent = face;
+
+  const robotFace = $("robotFace");
+  robotFace.dataset.face = face;
+
+  const eyes = robotFace.querySelectorAll(".robot-eye");
+  const mouth = robotFace.querySelector(".robot-mouth");
+
+  if (face === "happy" || face === "done") {
+    eyes.forEach(eye => eye.style.height = "10px");
+    mouth.style.width = "40px";
+  } else if (face === "working") {
+    eyes.forEach(eye => eye.style.background = "#f5d45f");
+    mouth.style.width = "25px";
+  } else {
+    eyes.forEach(eye => {
+      eye.style.height = "22px";
+      eye.style.background = "#fff9d8";
+    });
+    mouth.style.width = "35px";
+  }
 }
 
 function updateProgress() {
@@ -479,32 +809,32 @@ function setStage(stage) {
     if (i === stage + 1) el.classList.add("active");
   }
 
+  const factory = $("factory");
+  factory.classList.remove("stage-1", "stage-2", "stage-3");
+  factory.classList.add("stage-" + stage);
+
   if (stage === 0) {
     $("stageTitle").textContent = "플라스틱 분쇄 공정";
-    $("factoryIcon").textContent = "⚙️";
     $("mainMessage").textContent = "버튼을 정확히 10번 눌러 주세요!";
   }
 
   if (stage === 1) {
     $("stageTitle").textContent = "플라스틱 용융 공정";
-    $("factoryIcon").textContent = "🌡️";
     $("mainMessage").textContent =
       "기준 온도보다 1℃ 높아지면 다음 단계로 이동합니다.";
   }
 
   if (stage === 2) {
     $("stageTitle").textContent = "플라스틱 압축 공정";
-    $("factoryIcon").textContent = "🏭";
     $("mainMessage").textContent =
       "센서 10cm 이내에서 물체를 4초간 유지하세요!";
   }
 
   if (stage === 3) {
     $("stageTitle").textContent = "재활용 공정 완료!";
-    $("factoryIcon").textContent = "🏆";
     $("mainMessage").textContent =
       "모든 재활용 공정이 완료되었습니다!";
-    robot("모든 재활용 공정이<br>완료되었습니다!", "🎉");
+    robot("모든 재활용 공정이<br>완료되었습니다!", "done");
   }
 
   updateProgress();
@@ -512,12 +842,8 @@ function setStage(stage) {
 
 function startTimer() {
   pressStart = Date.now();
-
   $("timerMessage").textContent = "물체 감지 중!";
-  robot(
-    "초음파 센서가 물체를 감지했어요!<br>4초 동안 유지하세요.",
-    "👀"
-  );
+  robot("초음파 센서가 물체를 감지했어요!<br>4초 동안 유지하세요.", "working");
 
   if (timerInterval) clearInterval(timerInterval);
 
@@ -529,9 +855,7 @@ function startTimer() {
 
     $("timerValue").textContent = remain.toFixed(1);
 
-    if (remain <= 0) {
-      clearInterval(timerInterval);
-    }
+    if (remain <= 0) clearInterval(timerInterval);
   }, 50);
 }
 
@@ -541,13 +865,8 @@ function cancelTimer() {
   if (timerInterval) clearInterval(timerInterval);
 
   $("timerValue").textContent = "4.0";
-  $("timerMessage").textContent =
-    "감지가 끊겼습니다. 다시 시도하세요.";
-
-  robot(
-    "물체 감지가 끊겼어요.<br>다시 센서 가까이에 놓아 주세요.",
-    "🤖"
-  );
+  $("timerMessage").textContent = "감지가 끊겼습니다. 다시 시도하세요.";
+  robot("물체 감지가 끊겼어요.<br>다시 센서 가까이에 놓아 주세요.", "normal");
 }
 
 function completeGame() {
@@ -569,10 +888,7 @@ function processLine(line) {
   log(line);
 
   if (line === "SYSTEM_READY") {
-    robot(
-      "아두이노 연결 성공!<br>분쇄 공정을 시작하세요.",
-      "🤖"
-    );
+    robot("아두이노 연결 성공!<br>분쇄 공정을 시작하세요.", "normal");
   }
 
   if (line === "STEP1_READY") {
@@ -580,7 +896,7 @@ function processLine(line) {
   }
 
   if (line === "CRUSH") {
-    robot("플라스틱 분쇄 중!", "⚙️");
+    robot("플라스틱 분쇄 중!", "working");
   }
 
   if (line.startsWith("COUNT:")) {
@@ -595,25 +911,16 @@ function processLine(line) {
   if (line === "CRUSH_DONE") {
     $("countValue").textContent = "10 / 10";
     updateProgress();
-
-    robot(
-      "버튼 10회 입력 완료!<br>분쇄 공정이 끝났습니다.",
-      "✅"
-    );
+    robot("버튼 10회 입력 완료!<br>분쇄 공정이 끝났습니다.", "happy");
   }
 
   if (line === "STEP2_READY") {
     setStage(1);
-
-    robot(
-      "분쇄 완료!<br>용융 공정을 시작합니다.",
-      "🌡️"
-    );
+    robot("분쇄 완료!<br>용융 공정을 시작합니다.", "working");
   }
 
   if (line.startsWith("TEMP:")) {
     const temp = parseFloat(line.split(":")[1]);
-
     if (!isNaN(temp)) {
       $("tempValue").textContent = temp.toFixed(1) + " ℃";
     }
@@ -621,7 +928,6 @@ function processLine(line) {
 
   if (line.startsWith("BASE_TEMP:")) {
     const temp = parseFloat(line.split(":")[1]);
-
     if (!isNaN(temp)) {
       $("baseValue").textContent = temp.toFixed(1) + " ℃";
     }
@@ -632,7 +938,6 @@ function processLine(line) {
 
     if (!isNaN(temp)) {
       $("targetValue").textContent = temp.toFixed(1) + " ℃";
-
       $("mainMessage").textContent =
         "기준 온도 " + $("baseValue").textContent +
         " → 목표 온도 " + $("targetValue").textContent;
@@ -640,19 +945,12 @@ function processLine(line) {
   }
 
   if (line === "MELT_DONE") {
-    robot(
-      "목표 온도에 도달했습니다!<br>용융 공정 완료!",
-      "🔥"
-    );
+    robot("목표 온도에 도달했습니다!<br>용융 공정 완료!", "happy");
   }
 
   if (line === "STEP3_READY") {
     setStage(2);
-
-    robot(
-      "이제 압축 공정입니다!<br>센서에 물체를 가까이 대세요.",
-      "🏭"
-    );
+    robot("이제 압축 공정입니다!<br>센서에 물체를 가까이 대세요.", "working");
   }
 
   if (line === "PRESS_START") {
@@ -682,28 +980,19 @@ async function connectArduino() {
     $("connectBtn").textContent = "연결됨";
     $("connectBtn").disabled = true;
 
-    robot(
-      "아두이노 연결 성공!<br>게임을 시작합니다.",
-      "🤖"
-    );
+    robot("아두이노 연결 성공!<br>게임을 시작합니다.", "happy");
 
     readSerial();
-
   } catch (error) {
     console.error(error);
-
     $("connectionStatus").textContent = "● 연결 실패";
-
-    alert(
-      "연결에 실패했습니다. 시리얼 모니터를 닫고 다시 시도해 주세요."
-    );
+    alert("연결에 실패했습니다. 시리얼 모니터를 닫고 다시 시도해 주세요.");
   }
 }
 
 async function readSerial() {
   const decoder = new TextDecoderStream();
   const closed = port.readable.pipeTo(decoder.writable);
-
   reader = decoder.readable.getReader();
 
   let buffer = "";
@@ -711,7 +1000,6 @@ async function readSerial() {
   try {
     while (true) {
       const { value, done } = await reader.read();
-
       if (done) break;
 
       buffer += value;
@@ -723,17 +1011,14 @@ async function readSerial() {
         processLine(line);
       }
     }
-
   } catch (error) {
     console.error(error);
     log("시리얼 읽기 오류");
-
   } finally {
     reader.releaseLock();
     await closed.catch(() => {});
   }
 }
 </script>
-
 </body>
 </html>

@@ -1,152 +1,344 @@
 
-#include <DHT.h>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GREEN FACTORY</title>
 
-// 센서 핀 설정
-#define TRIG_PIN 9
-#define ECHO_PIN 10
-#define BUTTON_PIN 2
-#define DHT_PIN 4
-#define DHT_TYPE DHT11
-
-DHT dht(DHT_PIN, DHT_TYPE);
-
-// 진행 단계
-// 0: 분쇄
-// 1: 용융
-// 2: 압축
-// 3: 완료
-
-int stage = 0;
-int crushCount = 0;
-
-// 버튼 상태
-bool lastButtonState = HIGH;
-unsigned long lastButtonTime = 0;
-
-// 센서 측정 시간
-unsigned long lastTempTime = 0;
-unsigned long lastDistanceTime = 0;
-
-// 온도
-float initialTemp = -100;
-float currentTemp = 0;
-
-void setup() {
-  Serial.begin(9600);
-
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
-
-  dht.begin();
-
-  Serial.println("SYSTEM_READY");
-  Serial.println("STEP1_READY");
+<style>
+* {
+  box-sizing: border-box;
 }
 
-void loop() {
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #eaf5e9;
+  color: #24452d;
+  text-align: center;
+}
 
-  // STEP 1. 버튼 5회 입력: 플라스틱 분쇄
-  bool currentButtonState = digitalRead(BUTTON_PIN);
+.container {
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px #0001;
+}
 
-  if (lastButtonState == HIGH &&
-      currentButtonState == LOW &&
-      millis() - lastButtonTime > 200) {
+h1 {
+  color: #23834a;
+}
 
-    lastButtonTime = millis();
+.subtitle {
+  color: #66816b;
+}
 
-    if (stage == 0 && crushCount < 5) {
+.status {
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 10px;
+  background: #edf7ee;
+  font-weight: bold;
+}
 
-      crushCount++;
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 25px 0;
+}
 
-      Serial.println("CRUSH");
+.step {
+  padding: 15px 5px;
+  border: 2px solid #d5e8d7;
+  border-radius: 12px;
+  background: #f8fcf8;
+}
 
-      Serial.print("COUNT:");
-      Serial.println(crushCount);
+.step.active {
+  border-color: #2b9b54;
+  background: #dcf5e2;
+}
 
-      if (crushCount == 5) {
+.step.done {
+  background: #c5ebce;
+  border-color: #23834a;
+}
 
-        stage = 1;
-        initialTemp = -100;
+.number {
+  font-size: 25px;
+}
 
-        Serial.println("CRUSH_DONE");
-        Serial.println("STEP2_READY");
-      }
-    }
+.animation {
+  font-size: 65px;
+  margin: 25px;
+}
+
+.progress {
+  height: 15px;
+  background: #e3eee4;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.bar {
+  height: 100%;
+  width: 0%;
+  background: #39a65d;
+  transition: width .4s;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 22px;
+  margin: 6px;
+  background: #23834a;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #aaa;
+}
+
+.info {
+  background: #f3f8f3;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 15px;
+  line-height: 2;
+}
+
+#log {
+  text-align: left;
+  font-size: 12px;
+  color: #607464;
+  max-height: 100px;
+  overflow-y: auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>GREEN FACTORY</h1>
+<p class="subtitle">스마트 재활용 공장 시뮬레이션</p>
+
+<div class="status" id="connection">
+  아두이노 연결 대기 중
+</div>
+
+<button id="connectBtn" onclick="connectArduino()">
+  아두이노 연결하기
+</button>
+
+<div class="steps">
+  <div class="step active" id="step1">
+    <div class="number">♻️</div>
+    <b>STEP 1</b>
+    <p>플라스틱 분쇄</p>
+  </div>
+
+  <div class="step" id="step2">
+    <div class="number">🔥</div>
+    <b>STEP 2</b>
+    <p>플라스틱 용융</p>
+  </div>
+
+  <div class="step" id="step3">
+    <div class="number">⚙️</div>
+    <b>STEP 3</b>
+    <p>압축 및 완성</p>
+  </div>
+</div>
+
+<div class="animation" id="animation">♻️</div>
+
+<h2 id="message">공장 가동 준비 완료!</h2>
+<p id="detail">아두이노를 연결하고 버튼을 눌러 주세요.</p>
+
+<div class="progress">
+  <div class="bar" id="bar"></div>
+</div>
+
+<div class="info">
+  <b>분쇄 진행 횟수</b><br>
+  <span id="count">0</span> / 5회
+  <hr>
+  <b>현재 온도</b><br>
+  <span id="temp">측정 대기 중</span> ℃
+  <hr>
+  <b>기준 온도</b><br>
+  <span id="baseTemp">측정 대기 중</span>
+</div>
+
+<div id="log" class="info">
+  공장 작동 기록
+</div>
+
+<button onclick="resetDisplay()">화면 초기화</button>
+
+</div>
+
+<script>
+let port;
+let reader;
+let stage = 0;
+let count = 0;
+let buffer = "";
+
+function setMessage(title, detail, emoji) {
+  document.getElementById("message").textContent = title;
+  document.getElementById("detail").textContent = detail;
+  document.getElementById("animation").textContent = emoji;
+}
+
+function updateSteps() {
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById("step" + i);
+    el.className = "step";
+
+    if (i - 1 < stage) el.classList.add("done");
+    else if (i - 1 === stage) el.classList.add("active");
   }
 
-  lastButtonState = currentButtonState;
+  document.getElementById("bar").style.width =
+    (stage === 3 ? 100 : stage * 33.33) + "%";
+}
 
+function log(text) {
+  const box = document.getElementById("log");
+  box.innerHTML += "<br>" + text;
+  box.scrollTop = box.scrollHeight;
+}
 
-  // STEP 2. 기준 온도보다 1도 상승하면 용융 완료
-  if (millis() - lastTempTime >= 2000) {
+function receive(raw) {
+  const line = raw.trim();
+  if (!line) return;
 
-    lastTempTime = millis();
+  log(line);
 
-    float t = dht.readTemperature();
-
-    if (!isnan(t)) {
-
-      currentTemp = t;
-
-      Serial.print("TEMP:");
-      Serial.println(currentTemp, 1);
-
-      if (stage == 1) {
-
-        // 처음 측정한 온도를 기준 온도로 설정
-        if (initialTemp == -100) {
-
-          initialTemp = currentTemp;
-
-          Serial.print("BASE_TEMP:");
-          Serial.println(initialTemp, 1);
-        }
-
-        // 기준 온도보다 1도 이상 상승
-        else if (currentTemp >= initialTemp + 1.0) {
-
-          stage = 2;
-
-          Serial.println("MELT_DONE");
-          Serial.println("STEP3_READY");
-        }
-      }
-    }
+  if (line === "SYSTEM_READY") {
+    document.getElementById("connection").textContent =
+      "아두이노 연결 완료";
   }
 
+  if (line === "CRUSH") {
+    setMessage("플라스틱 분쇄 중!", "플라스틱을 분쇄하고 있습니다.", "♻️");
+  }
 
-  // STEP 3. 초음파 센서 10cm 이내 감지: 압축
-  if (stage == 2 &&
-      millis() - lastDistanceTime >= 100) {
+  if (line.startsWith("COUNT:")) {
+    count = Number(line.split(":")[1]);
+    document.getElementById("count").textContent = count;
+  }
 
-    lastDistanceTime = millis();
+  if (line === "CRUSH_DONE") {
+    stage = 1;
+    updateSteps();
+    setMessage("분쇄 완료!", "플라스틱 분쇄가 끝났습니다.", "✅");
+  }
 
-    digitalWrite(TRIG_PIN, LOW);
-    delayMicroseconds(2);
+  if (line === "STEP2_READY") {
+    stage = 1;
+    updateSteps();
+    setMessage("용융 단계 시작!", "기준 온도를 측정합니다.", "🔥");
+  }
 
-    digitalWrite(TRIG_PIN, HIGH);
-    delayMicroseconds(10);
+  if (line.startsWith("TEMP:")) {
+    document.getElementById("temp").textContent =
+      line.split(":")[1];
+  }
 
-    digitalWrite(TRIG_PIN, LOW);
+  if (line.startsWith("BASE_TEMP:")) {
+    document.getElementById("baseTemp").textContent =
+      line.split(":")[1] + " ℃";
+  }
 
-    long duration = pulseIn(ECHO_PIN, HIGH, 30000);
+  if (line === "MELT_DONE") {
+    stage = 2;
+    updateSteps();
+    setMessage("용융 완료!", "플라스틱 용융 단계가 끝났습니다.", "🔥");
+  }
 
-    if (duration > 0) {
+  if (line === "STEP3_READY") {
+    stage = 2;
+    updateSteps();
+    setMessage("압축 단계 시작!", "초음파 센서에 손을 가까이 대세요.", "⚙️");
+  }
 
-      float distance = duration * 0.0343 / 2;
+  if (line === "PRESS_START") {
+    setMessage("플라스틱 압축 중!", "재활용 소재를 압축하고 있습니다.", "⚙️");
+  }
 
-      if (distance <= 10) {
-
-        stage = 3;
-
-        Serial.println("PRESS_START");
-
-        delay(1500);
-
-        Serial.println("PROCESS_DONE");
-        Serial.println("ALL_COMPLETE");
-      }
-    }
+  if (line === "PROCESS_DONE" || line === "ALL_COMPLETE") {
+    stage = 3;
+    updateSteps();
+    document.getElementById("bar").style.width = "100%";
+    setMessage("재활용 공정 완료!", "모든 공정이 성공적으로 끝났습니다!", "🏆");
   }
 }
+
+async function connectArduino() {
+  if (!("serial" in navigator)) {
+    alert("Chrome 또는 Edge 브라우저에서 HTTPS 주소로 접속해 주세요.");
+    return;
+  }
+
+  try {
+    port = await navigator.serial.requestPort();
+    await port.open({ baudRate: 9600 });
+
+    document.getElementById("connection").textContent =
+      "아두이노 연결 완료";
+
+    document.getElementById("connectBtn").disabled = true;
+
+    const decoder = new TextDecoderStream();
+    port.readable.pipeTo(decoder.writable).catch(() => {});
+    reader = decoder.readable.getReader();
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+
+      buffer += value;
+      const lines = buffer.split(/\r?\n/);
+      buffer = lines.pop();
+
+      for (const line of lines) {
+        receive(line);
+      }
+    }
+
+  } catch (error) {
+    document.getElementById("connection").textContent =
+      "연결 실패: 다시 시도해 주세요.";
+    document.getElementById("connectBtn").disabled = false;
+    alert("아두이노 연결을 확인해 주세요.\n" + error.message);
+  }
+}
+
+function resetDisplay() {
+  stage = 0;
+  count = 0;
+
+  document.getElementById("count").textContent = "0";
+  document.getElementById("temp").textContent = "측정 대기 중";
+  document.getElementById("baseTemp").textContent = "측정 대기 중";
+
+  updateSteps();
+  setMessage("공장 가동 준비 완료!", "아두이노를 연결하고 버튼을 눌러 주세요.", "♻️");
+}
+</script>
+
+</body>
+</html>

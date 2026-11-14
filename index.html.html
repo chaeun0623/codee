@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GREEN FACTORY</title>
+<style>
+:root{--green:#27865b;--dark:#173d30;--mint:#e9f6ef;--bg:#f4f8f5;--muted:#6d7e75}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:var(--bg);color:#20352b}
+header{background:var(--dark);color:white;padding:28px 18px;text-align:center}
+header h1{margin:0;font-size:clamp(26px,5vw,40px);letter-spacing:2px}
+header p{margin:8px 0 0;color:#d1e8db}
+main{max-width:950px;margin:24px auto;padding:0 16px 40px}
+.top{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+button{border:0;border-radius:12px;padding:13px 20px;font-size:15px;font-weight:700;cursor:pointer}
+#connect{background:var(--green);color:white}
+#reset{background:#e1eae4;color:var(--dark)}
+#status{background:white;border:1px solid #d8e5dc;border-radius:12px;padding:13px 16px;text-align:center;margin-bottom:20px;color:var(--muted)}
+.progress-wrap{background:#dce9e0;height:12px;border-radius:20px;overflow:hidden;margin:10px 0 25px}
+#progress{height:100%;width:0;background:var(--green);transition:width .4s}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.step{background:white;border:2px solid #e1ebe4;border-radius:18px;padding:20px 15px;text-align:center;min-height:245px;transition:.25s}
+.step.active{border-color:var(--green);box-shadow:0 8px 22px #1d75421a}
+.step.done{background:var(--mint);border-color:#8ac5a4}
+.num{font-size:12px;color:var(--green);font-weight:800;letter-spacing:1px}
+.emoji{font-size:55px;margin:18px 0 10px;display:block}
+.step h2{font-size:19px;margin:8px 0}
+.step p{font-size:13px;color:var(--muted);line-height:1.5;min-height:38px}
+.value{font-size:14px;font-weight:700;color:var(--dark);margin-top:12px}
+.machine{display:inline-block}
+.active .shred{animation:shake .18s infinite}
+.active .melt{animation:glow 1s infinite alternate}
+.active .press{animation:press .8s infinite alternate}
+@keyframes shake{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-3px) rotate(-3deg)}75%{transform:translateX(3px) rotate(3deg)}}
+@keyframes glow{from{filter:drop-shadow(0 0 1px #f5a623)}to{filter:drop-shadow(0 0 15px #ff9e27)}}
+@keyframes press{from{transform:translateY(-5px)}to{transform:translateY(10px)}}
+#message{background:white;border-radius:14px;padding:17px;margin-top:18px;text-align:center;line-height:1.6}
+.small{font-size:12px;color:var(--muted);margin-top:14px;text-align:center}
+@media(max-width:650px){.steps{grid-template-columns:1fr}.step{min-height:190px}.emoji{font-size:45px;margin:10px}}
+</style>
+</head>
+<body>
+<header><h1>GREEN FACTORY</h1><p>버려진 플라스틱의 새로운 시작</p></header>
+<main>
+  <div class="top">
+    <button id="connect">아두이노 연결</button>
+    <button id="reset">화면 초기화</button>
+  </div>
+  <div id="status">연결 대기 중 · PC 크롬 또는 엣지에서 아두이노를 연결하세요.</div>
+  <div class="progress-wrap"><div id="progress"></div></div>
+  <section class="steps">
+    <article class="step active" id="step1">
+      <div class="num">STEP 01</div><span class="emoji machine shred">♻️</span>
+      <h2>플라스틱 분쇄</h2><p>버튼을 5번 눌러 플라스틱을 잘게 분쇄합니다.</p>
+      <div class="value" id="count">버튼 입력: 0 / 5</div>
+    </article>
+    <article class="step" id="step2">
+      <div class="num">STEP 02</div><span class="emoji machine melt">🔥</span>
+      <h2>플라스틱 용융</h2><p>기준 온도보다 센서 측정 온도가 1℃ 이상 높아지면 완료됩니다.</p>
+      <div class="value" id="temperature">현재 온도: -- ℃</div>
+      <div class="value" id="baseline">기준 온도: -- ℃</div>
+    </article>
+    <article class="step" id="step3">
+      <div class="num">STEP 03</div><span class="emoji machine press">🏭</span>
+      <h2>압축 및 완성</h2><p>초음파 센서 앞 10cm 이내에 손을 가져가면 압축합니다.</p>
+      <div class="value" id="finished">제품 완성 대기 중</div>
+    </article>
+  </section>
+  <div id="message">아두이노를 연결한 뒤 STEP 1부터 진행하세요.</div>
+  <p class="small">※ 온도 센서는 주변 공기 온도를 측정합니다. 실제 플라스틱을 가열하는 장치가 아니라 재활용 과정을 표현한 체험용 시뮬레이션입니다.</p>
+</main>
+<script>
+let port=null, reader=null, keepReading=false;
+const $=id=>document.getElementById(id);
+function status(t){$("status").textContent=t}
+function setStage(n){
+  for(let i=1;i<=3;i++){
+    $("step"+i).classList.toggle("active",i===n);
+    if(i<n)$("step"+i).classList.add("done");
+  }
+  $("progress").style.width= n===1?"0%":n===2?"33%":n===3?"66%":"100%";
+}
+function handleLine(raw){
+  const line=raw.trim();
+  if(!line)return;
+  if(line==="SYSTEM_READY"){status("아두이노 연결됨");$("message").textContent="STEP 1: 버튼을 5번 눌러 플라스틱을 분쇄하세요.";}
+  else if(line==="CRUSH"){$("message").textContent="분쇄 중입니다...";}
+  else if(line.startsWith("COUNT:")){$("count").textContent="버튼 입력: "+line.split(":")[1]+" / 5";}
+  else if(line==="CRUSH_DONE"){ $("step1").classList.add("done"); setStage(2); $("message").textContent="분쇄 완료! STEP 2에서 온도 변화를 기다립니다.";}
+  else if(line==="STEP2_READY"){setStage(2);}
+  else if(line.startsWith("BASE_TEMP:")){$("baseline").textContent="기준 온도: "+line.split(":")[1]+" ℃";}
+  else if(line.startsWith("TEMP:")){$("temperature").textContent="현재 온도: "+line.split(":")[1]+" ℃";}
+  else if(line==="MELT_DONE"){$("step2").classList.add("done");setStage(3);$("message").textContent="용융 단계 완료! STEP 3에서 초음파 센서 가까이에 손을 가져가세요.";}
+  else if(line==="STEP3_READY"){setStage(3);}
+  else if(line==="PRESS_START"){$("message").textContent="압축 중입니다...";}
+  else if(line==="PROCESS_DONE"||line==="ALL_COMPLETE"){$("step3").classList.add("done");setStage(4);$("finished").textContent="재활용 제품 완성!";$("message").textContent="모든 재활용 과정이 완료되었습니다!";}
+}
+async function connect(){
+  if(!("serial" in navigator)){status("이 브라우저는 아두이노 시리얼 연결을 지원하지 않습니다. PC 크롬 또는 엣지를 이용하세요.");return;}
+  try{
+    port=await navigator.serial.requestPort();
+    await port.open({baudRate:9600});
+    status("아두이노 연결됨 · 데이터 수신 중");
+    keepReading=true;
+    const decoder=new TextDecoderStream();
+    const closed=port.readable.pipeTo(decoder.writable);
+    reader=decoder.readable.getReader();
+    let buffer="";
+    while(keepReading){
+      const {value,done}=await reader.read();
+      if(done)break;
+      buffer+=value;
+      const lines=buffer.split(/\r?\n/);
+      buffer=lines.pop();
+      lines.forEach(handleLine);
+    }
+    await closed.catch(()=>{});
+  }catch(e){status("연결 실패: "+(e.message||e));}
+}
+$("connect").addEventListener("click",connect);
+$("reset").addEventListener("click",()=>{
+  $("count").textContent="버튼 입력: 0 / 5";
+  $("temperature").textContent="현재 온도: -- ℃";
+  $("baseline").textContent="기준 온도: -- ℃";
+  $("finished").textContent="제품 완성 대기 중";
+  for(let i=1;i<=3;i++)$("step"+i).classList.remove("done","active");
+  $("step1").classList.add("active");$("progress").style.width="0%";
+  $("message").textContent="화면이 초기화되었습니다. 아두이노의 진행 상태는 초기화되지 않습니다.";
+});
+</script>
+</body>
+</html>

@@ -4,188 +4,488 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GREEN FACTORY</title>
+<title>GREEN FACTORY - 재활용 게임</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background: #eaf5e9;
-  color: #24452d;
+  min-height: 100vh;
+  font-family: 'Jua', sans-serif;
+  color: #f4ffe9;
+  background:
+    radial-gradient(circle at 20% 10%, #b7ed9c 0 2px, transparent 3px),
+    linear-gradient(180deg, #54bce5, #b8e9a0 55%, #397e43);
+  background-size: 35px 35px, auto;
+  padding: 22px 12px;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.game {
+  width: 100%;
+  max-width: 1050px;
+  margin: auto;
+}
+
+.header {
   text-align: center;
+  padding: 18px;
+  margin-bottom: 18px;
+  background: linear-gradient(#a86b32, #74421e);
+  border: 6px solid #452d19;
+  border-radius: 15px;
+  box-shadow: 0 7px 0 #392617;
+  text-shadow: 3px 3px #28551d;
 }
 
-.container {
-  max-width: 650px;
-  margin: 30px auto;
-  padding: 25px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 15px #0001;
+.header h1 {
+  margin: 0;
+  font-size: clamp(30px, 6vw, 52px);
+  color: #aaff50;
 }
 
-h1 {
-  color: #23834a;
+.header p {
+  margin: 5px 0 0;
+  font-size: 18px;
 }
 
-.subtitle {
-  color: #66816b;
+.connection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: #26384a;
+  border: 5px solid #172637;
+  border-radius: 13px;
+  padding: 13px 17px;
+  box-shadow: 0 5px 0 #101d2b;
+  margin-bottom: 18px;
 }
 
-.status {
-  padding: 12px;
-  margin: 15px 0;
-  border-radius: 10px;
-  background: #edf7ee;
-  font-weight: bold;
+#connection {
+  color: #ffda64;
+}
+
+.connect {
+  background: #65d82e;
+  color: #173b16;
+  border: 3px solid #28751d;
+  border-radius: 9px;
+  padding: 11px 17px;
+  font-size: 16px;
+  box-shadow: 0 4px 0 #205d18;
+}
+
+.connect:disabled {
+  opacity: .6;
+  cursor: default;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 270px;
+  gap: 17px;
+}
+
+.left, .right {
+  min-width: 0;
+}
+
+.panel {
+  background: #26364b;
+  border: 5px solid #17283b;
+  border-radius: 15px;
+  box-shadow: 0 6px 0 #101e2e;
+  padding: 17px;
+  margin-bottom: 17px;
+}
+
+.panel-title {
+  color: #b9ff75;
+  font-size: 21px;
+  margin: 0 0 14px;
 }
 
 .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin: 25px 0;
+  gap: 9px;
 }
 
 .step {
-  padding: 15px 5px;
-  border: 2px solid #d5e8d7;
+  background: #43536a;
+  border: 3px solid #192a3e;
   border-radius: 12px;
-  background: #f8fcf8;
+  padding: 13px 5px;
+  text-align: center;
+  color: #d7e3ee;
+  transition: .3s;
+}
+
+.step .number {
+  width: 39px;
+  height: 39px;
+  margin: 0 auto 7px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #718096;
+  border: 3px solid #d2dbe5;
+  font-size: 20px;
+}
+
+.step strong {
+  display: block;
+  font-size: 19px;
+}
+
+.step small {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
 }
 
 .step.active {
-  border-color: #2b9b54;
-  background: #dcf5e2;
+  background: #315d37;
+  border-color: #8aff4e;
+  box-shadow: 0 0 13px #83ff4d;
+  color: white;
+}
+
+.step.active .number {
+  background: #68d72e;
+  border-color: #e1ffbd;
+  color: #183c12;
 }
 
 .step.done {
-  background: #c5ebce;
-  border-color: #23834a;
+  background: #237b48;
+  border-color: #a6ff9b;
+  color: white;
 }
 
-.number {
-  font-size: 25px;
+.step.done .number {
+  background: #a4f36c;
+  color: #173e18;
 }
 
-.animation {
-  font-size: 65px;
-  margin: 25px;
+.arrow {
+  display: none;
+}
+
+.progress-wrap {
+  margin-top: 15px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 7px;
 }
 
 .progress {
-  height: 15px;
-  background: #e3eee4;
+  height: 17px;
+  border: 3px solid #111f2e;
   border-radius: 20px;
+  background: #101e2c;
   overflow: hidden;
-  margin: 15px 0;
 }
 
 .bar {
   height: 100%;
   width: 0%;
-  background: #39a65d;
-  transition: width .4s;
+  background: linear-gradient(90deg, #7eea34, #e3ff55);
+  transition: width .5s;
 }
 
-button {
-  border: none;
+.main-screen {
+  min-height: 235px;
+  background: linear-gradient(145deg, #101c24, #243c32);
+  border: 7px solid #5e9dce;
+  border-radius: 18px;
+  box-shadow: inset 0 0 15px #000, 0 6px 0 #263a50;
+  padding: 25px 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 17px;
+}
+
+.character {
+  font-size: 65px;
+  line-height: 1.2;
+  filter: drop-shadow(3px 4px 0 #0008);
+  animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+#message {
+  color: #eaff55;
+  font-size: clamp(23px, 4vw, 33px);
+  margin: 12px 0 7px;
+}
+
+#detail {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #e1f4e4;
+}
+
+.stats {
+  display: grid;
+  gap: 10px;
+}
+
+.stat {
+  background: linear-gradient(135deg, #f7c46b, #f3a84b);
+  color: #503018;
+  border: 4px solid #9a5c27;
   border-radius: 12px;
-  padding: 14px 22px;
-  margin: 6px;
-  background: #23834a;
-  color: white;
+  padding: 16px 10px;
+  text-align: center;
+  box-shadow: 0 4px 0 #70431f;
+}
+
+.stat .emoji {
+  font-size: 28px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 17px;
+  margin: 5px 0;
+}
+
+.stat .value {
+  font-size: 28px;
+  color: #47250e;
+}
+
+.robot {
+  text-align: center;
+  font-size: 85px;
+  padding: 10px;
+  filter: drop-shadow(3px 5px 0 #0004);
+}
+
+.speech {
+  background: #fff8dc;
+  color: #34422d;
+  border: 4px solid #8c7547;
+  border-radius: 15px;
+  padding: 13px;
+  text-align: center;
   font-size: 16px;
-  cursor: pointer;
+  margin-bottom: 14px;
 }
 
-button:disabled {
-  background: #aaa;
-}
-
-.info {
-  background: #f3f8f3;
-  padding: 15px;
-  border-radius: 12px;
-  margin-top: 15px;
-  line-height: 2;
-}
-
-#log {
-  text-align: left;
-  font-size: 12px;
-  color: #607464;
-  max-height: 100px;
+.log {
+  max-height: 130px;
   overflow-y: auto;
+  background: #111e2d;
+  border: 3px solid #40546c;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #b9e8bc;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.reset {
+  width: 100%;
+  background: linear-gradient(#8bf13e, #43b91e);
+  border: 4px solid #276b1d;
+  border-radius: 12px;
+  color: #153b12;
+  font-size: 19px;
+  padding: 13px;
+  box-shadow: 0 5px 0 #205517;
+  margin-top: 15px;
+}
+
+.reset:active, .connect:active {
+  transform: translateY(3px);
+  box-shadow: none;
+}
+
+.footer {
+  text-align: center;
+  color: #24502b;
+  padding: 20px 5px;
+  font-size: 13px;
+}
+
+@media(max-width: 700px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .robot-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .robot {
+    font-size: 55px;
+  }
+
+  .speech {
+    font-size: 14px;
+  }
+
+  .step {
+    padding: 10px 2px;
+  }
+
+  .step strong {
+    font-size: 16px;
+  }
+
+  .step small {
+    font-size: 11px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="game">
 
-<h1>GREEN FACTORY</h1>
-<p class="subtitle">스마트 재활용 공장 시뮬레이션</p>
+  <header class="header">
+    <h1>♻️ GREEN FACTORY</h1>
+    <p>스마트 재활용 공장 시뮬레이션</p>
+  </header>
 
-<div class="status" id="connection">
-  아두이노 연결 대기 중
-</div>
-
-<button id="connectBtn" onclick="connectArduino()">
-  아두이노 연결하기
-</button>
-
-<div class="steps">
-  <div class="step active" id="step1">
-    <div class="number">♻️</div>
-    <b>STEP 1</b>
-    <p>플라스틱 분쇄</p>
+  <div class="connection">
+    <strong>🔌 <span id="connection">아두이노 연결 대기 중</span></strong>
+    <button class="connect" id="connectBtn" onclick="connectArduino()">
+      아두이노 연결하기
+    </button>
   </div>
 
-  <div class="step" id="step2">
-    <div class="number">🔥</div>
-    <b>STEP 2</b>
-    <p>플라스틱 용융</p>
+  <div class="layout">
+
+    <main class="left">
+
+      <section class="panel">
+        <h2 class="panel-title">🏭 재활용 공정 진행 상황</h2>
+
+        <div class="steps">
+          <div class="step active" id="step1">
+            <div class="number">1</div>
+            <strong>분쇄</strong>
+            <small>버튼 5회</small>
+          </div>
+
+          <div class="step" id="step2">
+            <div class="number">2</div>
+            <strong>용융</strong>
+            <small>온도 1℃ 상승</small>
+          </div>
+
+          <div class="step" id="step3">
+            <div class="number">3</div>
+            <strong>압축</strong>
+            <small>10cm 이내 감지</small>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>공정 진행률</span>
+            <strong id="percent">0%</strong>
+          </div>
+          <div class="progress">
+            <div class="bar" id="bar"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-screen">
+        <div class="character" id="character">🤖</div>
+        <h2 id="message">공장 가동 준비 완료!</h2>
+        <p id="detail">아두이노를 연결하고 버튼을 눌러 주세요.</p>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel-title">📋 공장 작동 기록</h2>
+        <div class="log" id="log">
+          GREEN FACTORY 시스템 대기 중...
+        </div>
+      </section>
+
+    </main>
+
+    <aside class="right">
+
+      <div class="robot-box">
+        <div class="robot">🤖</div>
+        <div class="speech" id="speech">
+          지구를 지켜요!<br>
+          재활용을 시작해 볼까요?
+        </div>
+      </div>
+
+      <div class="stats">
+
+        <div class="stat">
+          <div class="emoji">♻️</div>
+          <strong>분쇄 진행 횟수</strong>
+          <div class="value"><span id="count">0</span> / 5회</div>
+        </div>
+
+        <div class="stat">
+          <div class="emoji">🌡️</div>
+          <strong>현재 온도</strong>
+          <div class="value"><span id="temp">--</span> ℃</div>
+        </div>
+
+        <div class="stat">
+          <div class="emoji">🔥</div>
+          <strong>기준 온도</strong>
+          <div class="value"><span id="baseTemp">--</span> ℃</div>
+        </div>
+
+      </div>
+    </aside>
+
   </div>
 
-  <div class="step" id="step3">
-    <div class="number">⚙️</div>
-    <b>STEP 3</b>
-    <p>압축 및 완성</p>
+  <button class="reset" onclick="resetDisplay()">
+    ↻ 화면 초기화
+  </button>
+
+  <div class="footer">
+    GREEN FACTORY · 스마트 재활용 공장 프로젝트
   </div>
-</div>
-
-<div class="animation" id="animation">♻️</div>
-
-<h2 id="message">공장 가동 준비 완료!</h2>
-<p id="detail">아두이노를 연결하고 버튼을 눌러 주세요.</p>
-
-<div class="progress">
-  <div class="bar" id="bar"></div>
-</div>
-
-<div class="info">
-  <b>분쇄 진행 횟수</b><br>
-  <span id="count">0</span> / 5회
-  <hr>
-  <b>현재 온도</b><br>
-  <span id="temp">측정 대기 중</span> ℃
-  <hr>
-  <b>기준 온도</b><br>
-  <span id="baseTemp">측정 대기 중</span>
-</div>
-
-<div id="log" class="info">
-  공장 작동 기록
-</div>
-
-<button onclick="resetDisplay()">화면 초기화</button>
 
 </div>
 
@@ -196,10 +496,11 @@ let stage = 0;
 let count = 0;
 let buffer = "";
 
-function setMessage(title, detail, emoji) {
+function showMessage(title, detail, emoji, speech) {
   document.getElementById("message").textContent = title;
   document.getElementById("detail").textContent = detail;
-  document.getElementById("animation").textContent = emoji;
+  document.getElementById("character").textContent = emoji;
+  document.getElementById("speech").innerHTML = speech;
 }
 
 function updateSteps() {
@@ -207,17 +508,27 @@ function updateSteps() {
     const el = document.getElementById("step" + i);
     el.className = "step";
 
-    if (i - 1 < stage) el.classList.add("done");
-    else if (i - 1 === stage) el.classList.add("active");
+    if (i - 1 < stage) {
+      el.classList.add("done");
+      el.querySelector(".number").textContent = "✓";
+    } else {
+      el.querySelector(".number").textContent = i;
+      if (i - 1 === stage && stage < 3) {
+        el.classList.add("active");
+      }
+    }
   }
 
-  document.getElementById("bar").style.width =
-    (stage === 3 ? 100 : stage * 33.33) + "%";
+  const percent = stage === 3 ? 100 : stage * 33;
+  document.getElementById("bar").style.width = percent + "%";
+  document.getElementById("percent").textContent = percent + "%";
 }
 
-function log(text) {
+function addLog(text) {
   const box = document.getElementById("log");
-  box.innerHTML += "<br>" + text;
+  const line = document.createElement("div");
+  line.textContent = "▶ " + text;
+  box.appendChild(line);
   box.scrollTop = box.scrollHeight;
 }
 
@@ -225,7 +536,7 @@ function receive(raw) {
   const line = raw.trim();
   if (!line) return;
 
-  log(line);
+  addLog(line);
 
   if (line === "SYSTEM_READY") {
     document.getElementById("connection").textContent =
@@ -233,7 +544,12 @@ function receive(raw) {
   }
 
   if (line === "CRUSH") {
-    setMessage("플라스틱 분쇄 중!", "플라스틱을 분쇄하고 있습니다.", "♻️");
+    showMessage(
+      "플라스틱 분쇄 중!",
+      "플라스틱을 잘게 분쇄하고 있어요!",
+      "⚙️",
+      "분쇄 작업 진행 중!<br>조금만 더 힘내요!"
+    );
   }
 
   if (line.startsWith("COUNT:")) {
@@ -244,13 +560,23 @@ function receive(raw) {
   if (line === "CRUSH_DONE") {
     stage = 1;
     updateSteps();
-    setMessage("분쇄 완료!", "플라스틱 분쇄가 끝났습니다.", "✅");
+    showMessage(
+      "1단계 공정 완료!",
+      "플라스틱 분쇄가 끝났습니다!",
+      "🎉",
+      "분쇄 성공!<br>이제 용융 단계로 이동해요."
+    );
   }
 
   if (line === "STEP2_READY") {
     stage = 1;
     updateSteps();
-    setMessage("용융 단계 시작!", "기준 온도를 측정합니다.", "🔥");
+    showMessage(
+      "용융 단계 시작!",
+      "기준 온도를 측정하고 있습니다.",
+      "🔥",
+      "주변 온도가 1℃ 올라가면<br>다음 단계로 넘어가요."
+    );
   }
 
   if (line.startsWith("TEMP:")) {
@@ -260,36 +586,55 @@ function receive(raw) {
 
   if (line.startsWith("BASE_TEMP:")) {
     document.getElementById("baseTemp").textContent =
-      line.split(":")[1] + " ℃";
+      line.split(":")[1];
   }
 
   if (line === "MELT_DONE") {
     stage = 2;
     updateSteps();
-    setMessage("용융 완료!", "플라스틱 용융 단계가 끝났습니다.", "🔥");
+    showMessage(
+      "2단계 공정 완료!",
+      "용융 단계가 끝났습니다!",
+      "🔥",
+      "용융 성공!<br>마지막 압축 단계예요."
+    );
   }
 
   if (line === "STEP3_READY") {
     stage = 2;
     updateSteps();
-    setMessage("압축 단계 시작!", "초음파 센서에 손을 가까이 대세요.", "⚙️");
+    showMessage(
+      "압축 단계 시작!",
+      "초음파 센서에 손을 가까이 대세요.",
+      "🏭",
+      "마지막 단계예요!<br>센서에 가까이 다가가세요."
+    );
   }
 
   if (line === "PRESS_START") {
-    setMessage("플라스틱 압축 중!", "재활용 소재를 압축하고 있습니다.", "⚙️");
+    showMessage(
+      "플라스틱 압축 중!",
+      "재활용 소재를 압축하고 있습니다.",
+      "⚙️",
+      "압축 진행 중!<br>완성을 기다려 주세요."
+    );
   }
 
   if (line === "PROCESS_DONE" || line === "ALL_COMPLETE") {
     stage = 3;
     updateSteps();
-    document.getElementById("bar").style.width = "100%";
-    setMessage("재활용 공정 완료!", "모든 공정이 성공적으로 끝났습니다!", "🏆");
+    showMessage(
+      "🎊 재활용 공정 완료!",
+      "모든 공정이 성공적으로 끝났습니다!",
+      "🏆",
+      "미션 성공!<br>지구를 지켜냈어요!"
+    );
   }
 }
 
 async function connectArduino() {
   if (!("serial" in navigator)) {
-    alert("Chrome 또는 Edge 브라우저에서 HTTPS 주소로 접속해 주세요.");
+    alert("PC의 Chrome 또는 Edge 브라우저에서 접속해 주세요.");
     return;
   }
 
@@ -299,7 +644,6 @@ async function connectArduino() {
 
     document.getElementById("connection").textContent =
       "아두이노 연결 완료";
-
     document.getElementById("connectBtn").disabled = true;
 
     const decoder = new TextDecoderStream();
@@ -321,9 +665,9 @@ async function connectArduino() {
 
   } catch (error) {
     document.getElementById("connection").textContent =
-      "연결 실패: 다시 시도해 주세요.";
+      "연결 실패";
     document.getElementById("connectBtn").disabled = false;
-    alert("아두이노 연결을 확인해 주세요.\n" + error.message);
+    alert("연결을 확인해 주세요: " + error.message);
   }
 }
 
@@ -332,11 +676,20 @@ function resetDisplay() {
   count = 0;
 
   document.getElementById("count").textContent = "0";
-  document.getElementById("temp").textContent = "측정 대기 중";
-  document.getElementById("baseTemp").textContent = "측정 대기 중";
+  document.getElementById("temp").textContent = "--";
+  document.getElementById("baseTemp").textContent = "--";
+
+  document.getElementById("log").textContent =
+    "GREEN FACTORY 시스템 대기 중...";
 
   updateSteps();
-  setMessage("공장 가동 준비 완료!", "아두이노를 연결하고 버튼을 눌러 주세요.", "♻️");
+
+  showMessage(
+    "공장 가동 준비 완료!",
+    "아두이노를 연결하고 버튼을 눌러 주세요.",
+    "🤖",
+    "지구를 지켜요!<br>재활용을 시작해 볼까요?"
+  );
 }
 </script>
 

@@ -1,15 +1,152 @@
-// 버튼 5회 입력 시 분쇄 완료
-if (stage == 0 && crushCount < 5) {
-  crushCount++;
-  Serial.println("CRUSH");
 
-  Serial.print("COUNT:");
-  Serial.println(crushCount);
+#include <DHT.h>
 
-  if (crushCount == 5) {
-    stage = 1;
-    initialTemp = -100;
-    Serial.println("CRUSH_DONE");
-    Serial.println("STEP2_READY");
+// 센서 핀 설정
+#define TRIG_PIN 9
+#define ECHO_PIN 10
+#define BUTTON_PIN 2
+#define DHT_PIN 4
+#define DHT_TYPE DHT11
+
+DHT dht(DHT_PIN, DHT_TYPE);
+
+// 진행 단계
+// 0: 분쇄
+// 1: 용융
+// 2: 압축
+// 3: 완료
+
+int stage = 0;
+int crushCount = 0;
+
+// 버튼 상태
+bool lastButtonState = HIGH;
+unsigned long lastButtonTime = 0;
+
+// 센서 측정 시간
+unsigned long lastTempTime = 0;
+unsigned long lastDistanceTime = 0;
+
+// 온도
+float initialTemp = -100;
+float currentTemp = 0;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  dht.begin();
+
+  Serial.println("SYSTEM_READY");
+  Serial.println("STEP1_READY");
+}
+
+void loop() {
+
+  // STEP 1. 버튼 5회 입력: 플라스틱 분쇄
+  bool currentButtonState = digitalRead(BUTTON_PIN);
+
+  if (lastButtonState == HIGH &&
+      currentButtonState == LOW &&
+      millis() - lastButtonTime > 200) {
+
+    lastButtonTime = millis();
+
+    if (stage == 0 && crushCount < 5) {
+
+      crushCount++;
+
+      Serial.println("CRUSH");
+
+      Serial.print("COUNT:");
+      Serial.println(crushCount);
+
+      if (crushCount == 5) {
+
+        stage = 1;
+        initialTemp = -100;
+
+        Serial.println("CRUSH_DONE");
+        Serial.println("STEP2_READY");
+      }
+    }
+  }
+
+  lastButtonState = currentButtonState;
+
+
+  // STEP 2. 기준 온도보다 1도 상승하면 용융 완료
+  if (millis() - lastTempTime >= 2000) {
+
+    lastTempTime = millis();
+
+    float t = dht.readTemperature();
+
+    if (!isnan(t)) {
+
+      currentTemp = t;
+
+      Serial.print("TEMP:");
+      Serial.println(currentTemp, 1);
+
+      if (stage == 1) {
+
+        // 처음 측정한 온도를 기준 온도로 설정
+        if (initialTemp == -100) {
+
+          initialTemp = currentTemp;
+
+          Serial.print("BASE_TEMP:");
+          Serial.println(initialTemp, 1);
+        }
+
+        // 기준 온도보다 1도 이상 상승
+        else if (currentTemp >= initialTemp + 1.0) {
+
+          stage = 2;
+
+          Serial.println("MELT_DONE");
+          Serial.println("STEP3_READY");
+        }
+      }
+    }
+  }
+
+
+  // STEP 3. 초음파 센서 10cm 이내 감지: 압축
+  if (stage == 2 &&
+      millis() - lastDistanceTime >= 100) {
+
+    lastDistanceTime = millis();
+
+    digitalWrite(TRIG_PIN, LOW);
+    delayMicroseconds(2);
+
+    digitalWrite(TRIG_PIN, HIGH);
+    delayMicroseconds(10);
+
+    digitalWrite(TRIG_PIN, LOW);
+
+    long duration = pulseIn(ECHO_PIN, HIGH, 30000);
+
+    if (duration > 0) {
+
+      float distance = duration * 0.0343 / 2;
+
+      if (distance <= 10) {
+
+        stage = 3;
+
+        Serial.println("PRESS_START");
+
+        delay(1500);
+
+        Serial.println("PROCESS_DONE");
+        Serial.println("ALL_COMPLETE");
+      }
+    }
   }
 }

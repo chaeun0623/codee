@@ -13,16 +13,13 @@
 body {
   margin: 0;
   min-height: 100vh;
+  padding: 20px;
   font-family: 'Jua', sans-serif;
   color: #263b32;
-  background: linear-gradient(#bce9f5 0%, #e4f5d4 55%, #8bc77c 100%);
-  padding: 20px;
+  background: linear-gradient(#bce9f5, #e4f5d4 55%, #8bc77c);
 }
 
-.game {
-  max-width: 1250px;
-  margin: auto;
-}
+.game { max-width: 1250px; margin: auto; }
 
 header {
   display: flex;
@@ -40,12 +37,6 @@ h1 {
   text-shadow: 2px 3px white;
 }
 
-.connection {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 button {
   border: none;
   border-radius: 12px;
@@ -57,7 +48,7 @@ button {
   cursor: pointer;
 }
 
-button:hover { background: #145b39; }
+button:disabled { opacity: .6; cursor: default; }
 
 #connectionStatus {
   background: white;
@@ -82,21 +73,13 @@ button:hover { background: #145b39; }
   font-size: 19px;
 }
 
-.step.active {
-  background: #fff2b9;
-  border-color: #e6a92b;
-}
-
-.step.done {
-  background: #c9f1c8;
-  border-color: #55a65b;
-}
+.step.active { background: #fff2b9; border-color: #e6a92b; }
+.step.done { background: #c9f1c8; border-color: #55a65b; }
 
 .main {
   display: grid;
   grid-template-columns: 190px minmax(300px, 1fr) 245px;
   gap: 15px;
-  align-items: stretch;
 }
 
 .panel {
@@ -128,10 +111,7 @@ button:hover { background: #145b39; }
   margin-bottom: 15px;
 }
 
-.robot h2 {
-  font-size: 21px;
-  margin: 5px 0;
-}
+.robot h2 { font-size: 21px; margin: 5px 0; }
 
 #robotMessage {
   background: #fff3c4;
@@ -142,11 +122,7 @@ button:hover { background: #145b39; }
   font-size: 15px;
 }
 
-.center {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+.center { display: flex; flex-direction: column; gap: 14px; }
 
 .factory {
   background: linear-gradient(145deg, #d9f3d6, #a5d8a7);
@@ -160,27 +136,11 @@ button:hover { background: #145b39; }
   justify-content: center;
 }
 
-#stageTitle {
-  font-size: 28px;
-  color: #205e3d;
-  margin: 5px;
-}
+#stageTitle { font-size: 28px; color: #205e3d; margin: 5px; }
+#factoryIcon { font-size: 75px; margin: 8px; }
+#mainMessage { font-size: 19px; margin: 5px; }
 
-#factoryIcon {
-  font-size: 75px;
-  margin: 8px;
-}
-
-#mainMessage {
-  font-size: 19px;
-  margin: 5px;
-}
-
-.progressBox {
-  background: white;
-  border-radius: 15px;
-  padding: 15px;
-}
+.progressBox { background: white; border-radius: 15px; padding: 15px; }
 
 .progressTop {
   display: flex;
@@ -212,13 +172,10 @@ button:hover { background: #145b39; }
   padding: 12px;
   font-family: monospace;
   font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
-.stats {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+.stats { display: flex; flex-direction: column; gap: 12px; }
 
 .stat {
   background: #fff2c6;
@@ -228,16 +185,8 @@ button:hover { background: #145b39; }
   text-align: center;
 }
 
-.statTitle {
-  font-size: 15px;
-  color: #6c633e;
-}
-
-.statValue {
-  font-size: 29px;
-  color: #285a3c;
-  margin-top: 5px;
-}
+.statTitle { font-size: 15px; color: #6c633e; }
+.statValue { font-size: 29px; color: #285a3c; margin-top: 5px; }
 
 .timer {
   background: #e1efff;
@@ -247,10 +196,7 @@ button:hover { background: #145b39; }
   text-align: center;
 }
 
-#timerValue {
-  font-size: 38px;
-  color: #28639a;
-}
+#timerValue { font-size: 38px; color: #28639a; }
 
 .bottom {
   margin-top: 16px;
@@ -262,13 +208,8 @@ button:hover { background: #145b39; }
 }
 
 @media(max-width: 800px) {
-  .main {
-    grid-template-columns: 1fr;
-  }
-  .robot {
-    flex-direction: row;
-    gap: 15px;
-  }
+  .main { grid-template-columns: 1fr; }
+  .robot { flex-direction: row; gap: 15px; }
   .robotFace {
     width: 80px;
     height: 80px;
@@ -285,7 +226,7 @@ button:hover { background: #145b39; }
 
 <header>
   <h1>GREEN FACTORY</h1>
-  <div class="connection">
+  <div>
     <span id="connectionStatus">● 연결 대기 중</span>
     <button id="connectBtn" onclick="connectArduino()">아두이노 연결</button>
   </div>
@@ -299,72 +240,72 @@ button:hover { background: #145b39; }
 
 <div class="main">
 
-  <section class="panel robot">
-    <div class="robotFace" id="robotFace">🤖</div>
-    <div>
-      <h2>FACTORY ROBOT</h2>
-      <div id="robotMessage">아두이노를 연결하고<br>재활용 공정을 시작해 주세요!</div>
-    </div>
-  </section>
+<section class="panel robot">
+  <div class="robotFace" id="robotFace">🤖</div>
+  <div>
+    <h2>FACTORY ROBOT</h2>
+    <div id="robotMessage">아두이노를 연결하고<br>재활용 공정을 시작해 주세요!</div>
+  </div>
+</section>
 
-  <section class="center">
-    <div class="factory">
-      <div id="factoryIcon">🏭</div>
-      <h2 id="stageTitle">플라스틱 분쇄 공정</h2>
-      <div id="mainMessage">버튼을 10번 눌러 주세요!</div>
-    </div>
+<section class="center">
+  <div class="factory">
+    <div id="factoryIcon">🏭</div>
+    <h2 id="stageTitle">플라스틱 분쇄 공정</h2>
+    <div id="mainMessage">버튼을 정확히 10번 눌러 주세요!</div>
+  </div>
 
-    <div class="progressBox">
-      <div class="progressTop">
-        <span>공정 진행률</span>
-        <strong id="progressText">0%</strong>
-      </div>
-      <div class="progress">
-        <div id="progressBar"></div>
-      </div>
+  <div class="progressBox">
+    <div class="progressTop">
+      <span>공정 진행률</span>
+      <strong id="progressText">0%</strong>
     </div>
+    <div class="progress">
+      <div id="progressBar"></div>
+    </div>
+  </div>
 
-    <div class="panel">
-      <strong>공정 기록</strong>
-      <div class="log" id="log">
-        GREEN FACTORY SYSTEM READY<br>
-        아두이노 연결을 기다리는 중...
-      </div>
+  <div class="panel">
+    <strong>공정 기록</strong>
+    <div class="log" id="log">
+      GREEN FACTORY SYSTEM READY<br>
+      아두이노 연결을 기다리는 중...
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="stats">
-    <div class="stat">
-      <div class="statTitle">분쇄 버튼 횟수</div>
-      <div class="statValue" id="countValue">0 / 10</div>
-    </div>
+<section class="stats">
+  <div class="stat">
+    <div class="statTitle">분쇄 버튼 횟수</div>
+    <div class="statValue" id="countValue">0 / 10</div>
+  </div>
 
-    <div class="stat">
-      <div class="statTitle">현재 온도</div>
-      <div class="statValue" id="tempValue">-- ℃</div>
-    </div>
+  <div class="stat">
+    <div class="statTitle">현재 온도</div>
+    <div class="statValue" id="tempValue">-- ℃</div>
+  </div>
 
-    <div class="stat">
-      <div class="statTitle">기준 온도</div>
-      <div class="statValue" id="baseValue">-- ℃</div>
-    </div>
+  <div class="stat">
+    <div class="statTitle">기준 온도</div>
+    <div class="statValue" id="baseValue">-- ℃</div>
+  </div>
 
-    <div class="stat">
-      <div class="statTitle">목표 온도</div>
-      <div class="statValue" id="targetValue">-- ℃</div>
-    </div>
+  <div class="stat">
+    <div class="statTitle">목표 온도 (기준 +1℃)</div>
+    <div class="statValue" id="targetValue">-- ℃</div>
+  </div>
 
-    <div class="timer">
-      <div class="statTitle">압축 감지 타이머</div>
-      <div id="timerValue">4.0</div>
-      <div id="timerMessage">감지 대기 중</div>
-    </div>
-  </section>
+  <div class="timer">
+    <div class="statTitle">압축 감지 타이머</div>
+    <div id="timerValue">4.0</div>
+    <div id="timerMessage">감지 대기 중</div>
+  </div>
+</section>
 
 </div>
 
 <div class="bottom">
-  ♻️ GREEN FACTORY : 플라스틱을 분쇄하고, 용융하고, 압축하여 재활용하는 공정 체험 게임
+  GREEN FACTORY : 플라스틱 분쇄 → 용융 → 압축 → 재활용 완성
 </div>
 
 </div>
@@ -372,7 +313,6 @@ button:hover { background: #145b39; }
 <script>
 let port;
 let reader;
-let keepReading = false;
 let currentStage = 0;
 let pressStart = null;
 let timerInterval = null;
@@ -381,13 +321,33 @@ const $ = id => document.getElementById(id);
 
 function log(message) {
   const box = $("log");
-  box.innerHTML += "<br>" + message;
+  const line = document.createElement("div");
+  line.textContent = message;
+  box.appendChild(line);
   box.scrollTop = box.scrollHeight;
 }
 
 function robot(message, face = "🤖") {
   $("robotMessage").innerHTML = message;
   $("robotFace").textContent = face;
+}
+
+function updateProgress() {
+  let percent = 0;
+
+  if (currentStage === 0) {
+    const count = parseInt($("countValue").textContent) || 0;
+    percent = count / 10 * 100 / 3;
+  } else if (currentStage === 1) {
+    percent = 100 / 3;
+  } else if (currentStage === 2) {
+    percent = 200 / 3;
+  } else {
+    percent = 100;
+  }
+
+  $("progressBar").style.width = percent + "%";
+  $("progressText").textContent = Math.floor(percent) + "%";
 }
 
 function setStage(stage) {
@@ -404,53 +364,33 @@ function setStage(stage) {
   if (stage === 0) {
     $("stageTitle").textContent = "플라스틱 분쇄 공정";
     $("factoryIcon").textContent = "⚙️";
-    $("mainMessage").textContent = "버튼을 10번 눌러 주세요!";
+    $("mainMessage").textContent = "버튼을 정확히 10번 눌러 주세요!";
   }
 
   if (stage === 1) {
     $("stageTitle").textContent = "플라스틱 용융 공정";
     $("factoryIcon").textContent = "🌡️";
-    $("mainMessage").textContent = "목표 온도까지 온도를 높여 주세요!";
+    $("mainMessage").textContent = "기준 온도보다 1℃ 높아지면 다음 단계로 이동합니다.";
   }
 
   if (stage === 2) {
     $("stageTitle").textContent = "플라스틱 압축 공정";
     $("factoryIcon").textContent = "🏭";
-    $("mainMessage").textContent = "초음파 센서 10cm 이내에 물체를 4초간 유지하세요!";
+    $("mainMessage").textContent = "센서 10cm 이내에서 물체를 4초간 유지하세요!";
   }
 
   if (stage === 3) {
     $("stageTitle").textContent = "재활용 공정 완료!";
     $("factoryIcon").textContent = "🏆";
-    $("mainMessage").textContent = "GREEN FACTORY 공정이 모두 완료되었습니다!";
-    $("progressBar").style.width = "100%";
-    $("progressText").textContent = "100%";
+    $("mainMessage").textContent = "모든 재활용 공정이 완료되었습니다!";
     robot("모든 재활용 공정이<br>완료되었습니다!", "🎉");
   }
 
   updateProgress();
 }
 
-function updateProgress() {
-  let percent = 0;
-
-  if (currentStage === 0) {
-    percent = Number($("countValue").textContent.split("/")[0]) / 10 * 33.33;
-  } else if (currentStage === 1) {
-    percent = 33.33;
-  } else if (currentStage === 2) {
-    percent = 66.66;
-  } else {
-    percent = 100;
-  }
-
-  $("progressBar").style.width = percent + "%";
-  $("progressText").textContent = Math.floor(percent) + "%";
-}
-
 function startTimer() {
   pressStart = Date.now();
-
   $("timerMessage").textContent = "물체 감지 중!";
   robot("초음파 센서가 물체를 감지했어요!<br>4초 동안 유지하세요.", "👀");
 
@@ -459,14 +399,12 @@ function startTimer() {
   timerInterval = setInterval(() => {
     if (pressStart === null) return;
 
-    let elapsed = (Date.now() - pressStart) / 1000;
-    let remain = Math.max(0, 4 - elapsed);
+    const elapsed = (Date.now() - pressStart) / 1000;
+    const remain = Math.max(0, 4 - elapsed);
 
     $("timerValue").textContent = remain.toFixed(1);
 
-    if (remain <= 0) {
-      clearInterval(timerInterval);
-    }
+    if (remain <= 0) clearInterval(timerInterval);
   }, 50);
 }
 
@@ -510,7 +448,7 @@ function processLine(line) {
   }
 
   if (line.startsWith("COUNT:")) {
-    let count = parseInt(line.split(":")[1]);
+    const count = parseInt(line.split(":")[1]);
 
     if (!isNaN(count)) {
       $("countValue").textContent = count + " / 10";
@@ -520,7 +458,8 @@ function processLine(line) {
 
   if (line === "CRUSH_DONE") {
     $("countValue").textContent = "10 / 10";
-    robot("플라스틱 분쇄 완료!<br>다음 공정으로 이동합니다.", "✅");
+    updateProgress();
+    robot("버튼 10회 입력 완료!<br>분쇄 공정이 끝났습니다.", "✅");
   }
 
   if (line === "STEP2_READY") {
@@ -529,26 +468,24 @@ function processLine(line) {
   }
 
   if (line.startsWith("TEMP:")) {
-    let temp = parseFloat(line.split(":")[1]);
-
-    if (!isNaN(temp)) {
-      $("tempValue").textContent = temp.toFixed(1) + " ℃";
-    }
+    const temp = parseFloat(line.split(":")[1]);
+    if (!isNaN(temp)) $("tempValue").textContent = temp.toFixed(1) + " ℃";
   }
 
   if (line.startsWith("BASE_TEMP:")) {
-    let temp = parseFloat(line.split(":")[1]);
-
+    const temp = parseFloat(line.split(":")[1]);
     if (!isNaN(temp)) {
       $("baseValue").textContent = temp.toFixed(1) + " ℃";
     }
   }
 
   if (line.startsWith("TARGET_TEMP:")) {
-    let temp = parseFloat(line.split(":")[1]);
-
+    const temp = parseFloat(line.split(":")[1]);
     if (!isNaN(temp)) {
       $("targetValue").textContent = temp.toFixed(1) + " ℃";
+      $("mainMessage").textContent =
+        "기준 온도 " + $("baseValue").textContent +
+        " → 목표 온도 " + $("targetValue").textContent;
     }
   }
 
@@ -561,13 +498,9 @@ function processLine(line) {
     robot("이제 압축 공정입니다!<br>센서에 물체를 가까이 대세요.", "🏭");
   }
 
-  if (line === "PRESS_START") {
-    startTimer();
-  }
+  if (line === "PRESS_START") startTimer();
 
-  if (line === "PRESS_CANCEL") {
-    cancelTimer();
-  }
+  if (line === "PRESS_CANCEL") cancelTimer();
 
   if (line === "PROCESS_DONE" || line === "ALL_COMPLETE") {
     completeGame();
@@ -576,7 +509,7 @@ function processLine(line) {
 
 async function connectArduino() {
   if (!("serial" in navigator)) {
-    alert("이 브라우저는 Web Serial을 지원하지 않습니다. PC 크롬 또는 엣지를 이용해 주세요.");
+    alert("PC 크롬 또는 엣지 브라우저에서 접속해 주세요.");
     return;
   }
 
@@ -590,13 +523,11 @@ async function connectArduino() {
 
     robot("아두이노 연결 성공!<br>게임을 시작합니다.", "🤖");
 
-    keepReading = true;
     readSerial();
-
   } catch (error) {
     console.error(error);
     $("connectionStatus").textContent = "● 연결 실패";
-    alert("연결에 실패했습니다. 아두이노 포트와 연결 상태를 확인해 주세요.");
+    alert("연결에 실패했습니다. 시리얼 모니터를 닫고 다시 시도해 주세요.");
   }
 }
 
@@ -608,14 +539,13 @@ async function readSerial() {
   let buffer = "";
 
   try {
-    while (keepReading) {
+    while (true) {
       const { value, done } = await reader.read();
-
       if (done) break;
 
       buffer += value;
 
-      let lines = buffer.split(/\r?\n/);
+      const lines = buffer.split(/\r?\n/);
       buffer = lines.pop();
 
       for (const line of lines) {
@@ -627,645 +557,8 @@ async function readSerial() {
     log("시리얼 읽기 오류");
   } finally {
     reader.releaseLock();
+    await closed.catch(() => {});
   }
-
-  await closed.catch(() => {});
-}
-</script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GREEN FACTORY</title>
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-
-<style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: 'Jua', sans-serif;
-  color: #263b32;
-  background: linear-gradient(#bce9f5 0%, #e4f5d4 55%, #8bc77c 100%);
-  padding: 20px;
-}
-
-.game {
-  max-width: 1250px;
-  margin: auto;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-h1 {
-  font-size: 36px;
-  margin: 0;
-  color: #176b48;
-  text-shadow: 2px 3px white;
-}
-
-.connection {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-button {
-  border: none;
-  border-radius: 12px;
-  padding: 12px 20px;
-  background: #267c52;
-  color: white;
-  font-family: inherit;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover { background: #145b39; }
-
-#connectionStatus {
-  background: white;
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
-}
-
-.step {
-  background: #ffffffd9;
-  padding: 14px;
-  text-align: center;
-  border-radius: 15px;
-  border: 3px solid #b6d7b5;
-  font-size: 19px;
-}
-
-.step.active {
-  background: #fff2b9;
-  border-color: #e6a92b;
-}
-
-.step.done {
-  background: #c9f1c8;
-  border-color: #55a65b;
-}
-
-.main {
-  display: grid;
-  grid-template-columns: 190px minmax(300px, 1fr) 245px;
-  gap: 15px;
-  align-items: stretch;
-}
-
-.panel {
-  background: #ffffffed;
-  border: 3px solid #c2dfc0;
-  border-radius: 20px;
-  padding: 18px;
-  box-shadow: 0 5px 0 #76aa76;
-}
-
-.robot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.robotFace {
-  width: 115px;
-  height: 115px;
-  background: #d8f2ed;
-  border: 5px solid #428c78;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 65px;
-  margin-bottom: 15px;
-}
-
-.robot h2 {
-  font-size: 21px;
-  margin: 5px 0;
-}
-
-#robotMessage {
-  background: #fff3c4;
-  border-radius: 12px;
-  padding: 12px;
-  line-height: 1.5;
-  width: 100%;
-  font-size: 15px;
-}
-
-.center {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.factory {
-  background: linear-gradient(145deg, #d9f3d6, #a5d8a7);
-  border: 4px solid #5b9b67;
-  border-radius: 18px;
-  min-height: 235px;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#stageTitle {
-  font-size: 28px;
-  color: #205e3d;
-  margin: 5px;
-}
-
-#factoryIcon {
-  font-size: 75px;
-  margin: 8px;
-}
-
-#mainMessage {
-  font-size: 19px;
-  margin: 5px;
-}
-
-.progressBox {
-  background: white;
-  border-radius: 15px;
-  padding: 15px;
-}
-
-.progressTop {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 9px;
-  font-size: 17px;
-}
-
-.progress {
-  height: 19px;
-  background: #e1e9df;
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-#progressBar {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #55b96b, #b1d943);
-  transition: width .3s;
-}
-
-.log {
-  height: 100px;
-  overflow-y: auto;
-  background: #203a32;
-  color: #bff4c7;
-  border-radius: 12px;
-  padding: 12px;
-  font-family: monospace;
-  font-size: 12px;
-}
-
-.stats {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.stat {
-  background: #fff2c6;
-  border: 2px solid #e5c66d;
-  border-radius: 15px;
-  padding: 14px;
-  text-align: center;
-}
-
-.statTitle {
-  font-size: 15px;
-  color: #6c633e;
-}
-
-.statValue {
-  font-size: 29px;
-  color: #285a3c;
-  margin-top: 5px;
-}
-
-.timer {
-  background: #e1efff;
-  border: 2px solid #83b5e9;
-  border-radius: 15px;
-  padding: 14px;
-  text-align: center;
-}
-
-#timerValue {
-  font-size: 38px;
-  color: #28639a;
-}
-
-.bottom {
-  margin-top: 16px;
-  background: #ffffffdd;
-  padding: 14px;
-  border-radius: 15px;
-  text-align: center;
-  font-size: 14px;
-}
-
-@media(max-width: 800px) {
-  .main {
-    grid-template-columns: 1fr;
-  }
-  .robot {
-    flex-direction: row;
-    gap: 15px;
-  }
-  .robotFace {
-    width: 80px;
-    height: 80px;
-    font-size: 45px;
-    flex-shrink: 0;
-  }
-  h1 { font-size: 28px; }
-}
-</style>
-</head>
-
-<body>
-<div class="game">
-
-<header>
-  <h1>GREEN FACTORY</h1>
-  <div class="connection">
-    <span id="connectionStatus">● 연결 대기 중</span>
-    <button id="connectBtn" onclick="connectArduino()">아두이노 연결</button>
-  </div>
-</header>
-
-<div class="steps">
-  <div class="step active" id="step1">STEP 1<br>플라스틱 분쇄</div>
-  <div class="step" id="step2">STEP 2<br>플라스틱 용융</div>
-  <div class="step" id="step3">STEP 3<br>압축 및 완성</div>
-</div>
-
-<div class="main">
-
-  <section class="panel robot">
-    <div class="robotFace" id="robotFace">🤖</div>
-    <div>
-      <h2>FACTORY ROBOT</h2>
-      <div id="robotMessage">아두이노를 연결하고<br>재활용 공정을 시작해 주세요!</div>
-    </div>
-  </section>
-
-  <section class="center">
-    <div class="factory">
-      <div id="factoryIcon">🏭</div>
-      <h2 id="stageTitle">플라스틱 분쇄 공정</h2>
-      <div id="mainMessage">버튼을 10번 눌러 주세요!</div>
-    </div>
-
-    <div class="progressBox">
-      <div class="progressTop">
-        <span>공정 진행률</span>
-        <strong id="progressText">0%</strong>
-      </div>
-      <div class="progress">
-        <div id="progressBar"></div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <strong>공정 기록</strong>
-      <div class="log" id="log">
-        GREEN FACTORY SYSTEM READY<br>
-        아두이노 연결을 기다리는 중...
-      </div>
-    </div>
-  </section>
-
-  <section class="stats">
-    <div class="stat">
-      <div class="statTitle">분쇄 버튼 횟수</div>
-      <div class="statValue" id="countValue">0 / 10</div>
-    </div>
-
-    <div class="stat">
-      <div class="statTitle">현재 온도</div>
-      <div class="statValue" id="tempValue">-- ℃</div>
-    </div>
-
-    <div class="stat">
-      <div class="statTitle">기준 온도</div>
-      <div class="statValue" id="baseValue">-- ℃</div>
-    </div>
-
-    <div class="stat">
-      <div class="statTitle">목표 온도</div>
-      <div class="statValue" id="targetValue">-- ℃</div>
-    </div>
-
-    <div class="timer">
-      <div class="statTitle">압축 감지 타이머</div>
-      <div id="timerValue">4.0</div>
-      <div id="timerMessage">감지 대기 중</div>
-    </div>
-  </section>
-
-</div>
-
-<div class="bottom">
-  ♻️ GREEN FACTORY : 플라스틱을 분쇄하고, 용융하고, 압축하여 재활용하는 공정 체험 게임
-</div>
-
-</div>
-
-<script>
-let port;
-let reader;
-let keepReading = false;
-let currentStage = 0;
-let pressStart = null;
-let timerInterval = null;
-
-const $ = id => document.getElementById(id);
-
-function log(message) {
-  const box = $("log");
-  box.innerHTML += "<br>" + message;
-  box.scrollTop = box.scrollHeight;
-}
-
-function robot(message, face = "🤖") {
-  $("robotMessage").innerHTML = message;
-  $("robotFace").textContent = face;
-}
-
-function setStage(stage) {
-  currentStage = stage;
-
-  for (let i = 1; i <= 3; i++) {
-    const el = $("step" + i);
-    el.classList.remove("active", "done");
-
-    if (i < stage + 1) el.classList.add("done");
-    if (i === stage + 1) el.classList.add("active");
-  }
-
-  if (stage === 0) {
-    $("stageTitle").textContent = "플라스틱 분쇄 공정";
-    $("factoryIcon").textContent = "⚙️";
-    $("mainMessage").textContent = "버튼을 10번 눌러 주세요!";
-  }
-
-  if (stage === 1) {
-    $("stageTitle").textContent = "플라스틱 용융 공정";
-    $("factoryIcon").textContent = "🌡️";
-    $("mainMessage").textContent = "목표 온도까지 온도를 높여 주세요!";
-  }
-
-  if (stage === 2) {
-    $("stageTitle").textContent = "플라스틱 압축 공정";
-    $("factoryIcon").textContent = "🏭";
-    $("mainMessage").textContent = "초음파 센서 10cm 이내에 물체를 4초간 유지하세요!";
-  }
-
-  if (stage === 3) {
-    $("stageTitle").textContent = "재활용 공정 완료!";
-    $("factoryIcon").textContent = "🏆";
-    $("mainMessage").textContent = "GREEN FACTORY 공정이 모두 완료되었습니다!";
-    $("progressBar").style.width = "100%";
-    $("progressText").textContent = "100%";
-    robot("모든 재활용 공정이<br>완료되었습니다!", "🎉");
-  }
-
-  updateProgress();
-}
-
-function updateProgress() {
-  let percent = 0;
-
-  if (currentStage === 0) {
-    percent = Number($("countValue").textContent.split("/")[0]) / 10 * 33.33;
-  } else if (currentStage === 1) {
-    percent = 33.33;
-  } else if (currentStage === 2) {
-    percent = 66.66;
-  } else {
-    percent = 100;
-  }
-
-  $("progressBar").style.width = percent + "%";
-  $("progressText").textContent = Math.floor(percent) + "%";
-}
-
-function startTimer() {
-  pressStart = Date.now();
-
-  $("timerMessage").textContent = "물체 감지 중!";
-  robot("초음파 센서가 물체를 감지했어요!<br>4초 동안 유지하세요.", "👀");
-
-  if (timerInterval) clearInterval(timerInterval);
-
-  timerInterval = setInterval(() => {
-    if (pressStart === null) return;
-
-    let elapsed = (Date.now() - pressStart) / 1000;
-    let remain = Math.max(0, 4 - elapsed);
-
-    $("timerValue").textContent = remain.toFixed(1);
-
-    if (remain <= 0) {
-      clearInterval(timerInterval);
-    }
-  }, 50);
-}
-
-function cancelTimer() {
-  pressStart = null;
-
-  if (timerInterval) clearInterval(timerInterval);
-
-  $("timerValue").textContent = "4.0";
-  $("timerMessage").textContent = "감지가 끊겼습니다. 다시 시도하세요.";
-  robot("물체 감지가 끊겼어요.<br>다시 센서 가까이에 놓아 주세요.", "🤖");
-}
-
-function completeGame() {
-  pressStart = null;
-
-  if (timerInterval) clearInterval(timerInterval);
-
-  $("timerValue").textContent = "완료!";
-  $("timerMessage").textContent = "압축 공정 성공!";
-  setStage(3);
-  log("ALL PROCESS COMPLETE!");
-}
-
-function processLine(line) {
-  line = line.trim();
-  if (!line) return;
-
-  log(line);
-
-  if (line === "SYSTEM_READY") {
-    robot("아두이노 연결 성공!<br>분쇄 공정을 시작하세요.", "🤖");
-  }
-
-  if (line === "STEP1_READY") {
-    setStage(0);
-  }
-
-  if (line === "CRUSH") {
-    robot("플라스틱 분쇄 중!", "⚙️");
-  }
-
-  if (line.startsWith("COUNT:")) {
-    let count = parseInt(line.split(":")[1]);
-
-    if (!isNaN(count)) {
-      $("countValue").textContent = count + " / 10";
-      updateProgress();
-    }
-  }
-
-  if (line === "CRUSH_DONE") {
-    $("countValue").textContent = "10 / 10";
-    robot("플라스틱 분쇄 완료!<br>다음 공정으로 이동합니다.", "✅");
-  }
-
-  if (line === "STEP2_READY") {
-    setStage(1);
-    robot("분쇄 완료!<br>용융 공정을 시작합니다.", "🌡️");
-  }
-
-  if (line.startsWith("TEMP:")) {
-    let temp = parseFloat(line.split(":")[1]);
-
-    if (!isNaN(temp)) {
-      $("tempValue").textContent = temp.toFixed(1) + " ℃";
-    }
-  }
-
-  if (line.startsWith("BASE_TEMP:")) {
-    let temp = parseFloat(line.split(":")[1]);
-
-    if (!isNaN(temp)) {
-      $("baseValue").textContent = temp.toFixed(1) + " ℃";
-    }
-  }
-
-  if (line.startsWith("TARGET_TEMP:")) {
-    let temp = parseFloat(line.split(":")[1]);
-
-    if (!isNaN(temp)) {
-      $("targetValue").textContent = temp.toFixed(1) + " ℃";
-    }
-  }
-
-  if (line === "MELT_DONE") {
-    robot("목표 온도에 도달했습니다!<br>용융 공정 완료!", "🔥");
-  }
-
-  if (line === "STEP3_READY") {
-    setStage(2);
-    robot("이제 압축 공정입니다!<br>센서에 물체를 가까이 대세요.", "🏭");
-  }
-
-  if (line === "PRESS_START") {
-    startTimer();
-  }
-
-  if (line === "PRESS_CANCEL") {
-    cancelTimer();
-  }
-
-  if (line === "PROCESS_DONE" || line === "ALL_COMPLETE") {
-    completeGame();
-  }
-}
-
-async function connectArduino() {
-  if (!("serial" in navigator)) {
-    alert("이 브라우저는 Web Serial을 지원하지 않습니다. PC 크롬 또는 엣지를 이용해 주세요.");
-    return;
-  }
-
-  try {
-    port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 9600 });
-
-    $("connectionStatus").textContent = "● 아두이노 연결됨";
-    $("connectBtn").textContent = "연결됨";
-    $("connectBtn").disabled = true;
-
-    robot("아두이노 연결 성공!<br>게임을 시작합니다.", "🤖");
-
-    keepReading = true;
-    readSerial();
-
-  } catch (error) {
-    console.error(error);
-    $("connectionStatus").textContent = "● 연결 실패";
-    alert("연결에 실패했습니다. 아두이노 포트와 연결 상태를 확인해 주세요.");
-  }
-}
-
-async function readSerial() {
-  const decoder = new TextDecoderStream();
-  const closed = port.readable.pipeTo(decoder.writable);
-  reader = decoder.readable.getReader();
-
-  let buffer = "";
-
-  try {
-    while (keepReading) {
-      const { value, done } = await reader.read();
-
-      if (done) break;
-
-      buffer += value;
-
-      let lines = buffer.split(/\r?\n/);
-      buffer = lines.pop();
-
-      for (const line of lines) {
-        processLine(line);
-      }
-    }
-  } catch (error) {
-    console.error(error);
-    log("시리얼 읽기 오류");
-  } finally {
-    reader.releaseLock();
-  }
-
-  await closed.catch(() => {});
 }
 </script>
 </body>

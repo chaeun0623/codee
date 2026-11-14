@@ -4,627 +4,471 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GREEN FACTORY - PIXEL EDITION</title>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Press+Start+2P&display=swap" rel="stylesheet">
+<title>GREEN FACTORY</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Jua&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --dark: #203b35;
-  --green: #397b50;
-  --light-green: #9bd477;
-  --yellow: #f6d66b;
-  --cream: #fff8df;
-  --blue: #91d6df;
-  --pixel-border: 4px solid var(--dark);
+  --ink:#18352b;
+  --deep:#24563e;
+  --green:#75c66d;
+  --cream:#fff3c9;
+  --panel:#f7ffe9;
+  --line:#244b38;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing:border-box; }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 22px;
-  color: var(--dark);
-  font-family: 'Jua', sans-serif;
-  background-color: #9edbe5;
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  font-family:"Jua",sans-serif;
+  background-color:#a8dba0;
   background-image:
-    linear-gradient(90deg, transparent 95%, #ffffff25 95%),
-    linear-gradient(transparent 95%, #ffffff25 95%);
-  background-size: 32px 32px;
-}
-
-.game {
-  max-width: 1300px;
-  margin: auto;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 20px;
-  padding: 18px;
-  background: var(--cream);
-  border: var(--pixel-border);
-  box-shadow: 7px 7px 0 #31584b;
-}
-
-h1 {
-  margin: 0;
-  color: #267348;
-  font-size: 36px;
-  text-shadow: 3px 3px #b8df8d;
-  letter-spacing: 1px;
-}
-
-header > div {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
+    linear-gradient(45deg,#9bd18f 25%,transparent 25%),
+    linear-gradient(-45deg,#9bd18f 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#9bd18f 75%),
+    linear-gradient(-45deg,transparent 75%,#9bd18f 75%);
+  background-size:24px 24px;
 }
 
 button {
-  padding: 13px 18px;
-  border: 3px solid var(--dark);
-  border-radius: 0;
-  background: #f5ce59;
-  color: var(--dark);
-  font-family: inherit;
-  font-size: 17px;
-  box-shadow: 4px 4px 0 var(--dark);
-  cursor: pointer;
-  transition: transform .1s, box-shadow .1s;
-}
-
-button:hover:not(:disabled) {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 var(--dark);
+  border:3px solid var(--line);
+  border-radius:0;
+  padding:13px 18px;
+  color:white;
+  background:var(--deep);
+  box-shadow:4px 4px 0 #173729;
+  font-family:"Jua",sans-serif;
+  font-size:18px;
+  cursor:pointer;
 }
 
 button:disabled {
-  opacity: .65;
-  cursor: default;
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+button:hover:not(:disabled) {
+  transform:translate(-2px,-2px);
+  box-shadow:6px 6px 0 #173729;
+}
+
+.game {
+  width:min(1100px,calc(100% - 28px));
+  margin:auto;
+  padding:18px 0 28px;
+}
+
+header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.logo {
+  font-family:"Press Start 2P",monospace;
+  font-size:clamp(17px,3vw,27px);
+  color:#155638;
+  text-shadow:3px 3px #f4ffdf;
+  line-height:1.7;
+}
+
+.connection {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
 #connectionStatus {
-  display: inline-block;
-  padding: 10px;
-  background: #d5edbd;
-  border: 3px solid var(--dark);
-  font-size: 14px;
+  background:var(--cream);
+  border:3px solid var(--line);
+  padding:9px 12px;
+  box-shadow:3px 3px 0 #173729;
+  font-size:15px;
 }
 
-.pixel-label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 10px;
-  line-height: 1.8;
+.pixel-panel {
+  background:var(--panel);
+  border:4px solid var(--line);
+  box-shadow:7px 7px 0 rgba(24,53,43,.75);
+  padding:20px;
+}
+
+.screen {
+  display:none;
+  animation:enter .28s steps(5);
+}
+
+.screen.active {
+  display:block;
+}
+
+@keyframes enter {
+  from { opacity:0; transform:translateY(10px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.eyebrow {
+  font-family:"Press Start 2P",monospace;
+  font-size:10px;
+  color:#47734e;
+  line-height:1.8;
+}
+
+h2 {
+  font-size:clamp(23px,4vw,34px);
+  margin-bottom:12px;
+  color:#205c3b;
+}
+
+p {
+  font-size:19px;
+  line-height:1.65;
+}
+
+.small {
+  font-size:14px;
+  line-height:1.6;
+  color:#55705d;
+}
+
+.hero {
+  min-height:430px;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(#a9e2f2 0 58%,#8bcf79 58% 100%);
+}
+
+.hero-content {
+  position:relative;
+  z-index:2;
+  width:min(720px,100%);
+  text-align:center;
+  padding:35px 20px;
+}
+
+.hero h1 {
+  font-family:"Press Start 2P",monospace;
+  font-size:clamp(24px,5vw,42px);
+  line-height:1.7;
+  color:#17583a;
+  text-shadow:4px 4px #fff3bd;
+}
+
+.hero p {
+  max-width:620px;
+  margin:12px auto 24px;
+  background:#f7ffe9e8;
+  border:3px solid var(--line);
+  padding:12px;
+}
+
+.city {
+  position:absolute;
+  bottom:24%;
+  left:0;
+  width:100%;
+  height:100px;
+  display:flex;
+  align-items:end;
+  gap:10px;
+  opacity:.8;
+}
+
+.building {
+  flex:1;
+  background:#6b9b83;
+  border:4px solid #244b38;
+}
+
+.building:nth-child(1) { height:65px; }
+.building:nth-child(2) { height:95px; }
+.building:nth-child(3) { height:55px; }
+.building:nth-child(4) { height:82px; }
+.building:nth-child(5) { height:68px; }
+.building:nth-child(6) { height:100px; }
+
+.cloud {
+  position:absolute;
+  top:45px;
+  width:100px;
+  height:25px;
+  background:#f7fff0;
+  box-shadow:18px -15px #f7fff0,38px 0 #f7fff0,18px 10px #f7fff0;
+}
+
+.cloud.one { left:8%; }
+.cloud.two { right:12%; top:95px; transform:scale(.7); }
+
+.pixel-robot {
+  width:112px;
+  height:112px;
+  margin:0 auto 20px;
+  position:relative;
+  background:#c7e9df;
+  border:7px solid #245f50;
+  box-shadow:7px 7px 0 #173729;
+}
+
+.pixel-robot:before {
+  content:"";
+  position:absolute;
+  left:16px;
+  right:16px;
+  top:28px;
+  height:23px;
+  background:linear-gradient(
+    90deg,
+    #245f50 0 20%,
+    transparent 20% 80%,
+    #245f50 80%
+  );
+}
+
+.pixel-robot:after {
+  content:"";
+  position:absolute;
+  left:34px;
+  right:34px;
+  bottom:18px;
+  height:7px;
+  background:#245f50;
+}
+
+.robot-row {
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+.robot-row .pixel-robot {
+  flex:0 0 90px;
+  width:90px;
+  height:90px;
+  margin:0;
+}
+
+.dialogue {
+  flex:1;
+  background:var(--cream);
+  border:3px solid var(--line);
+  padding:15px;
+  font-size:19px;
+  line-height:1.6;
+}
+
+.dialogue strong { color:#286743; }
+
+.action-row {
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.yellow {
+  background:#d99a19;
+  color:#243c2b;
 }
 
 .steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:16px 0;
 }
 
 .step {
-  padding: 15px 8px;
-  text-align: center;
-  background: #f9f0c9;
-  border: var(--pixel-border);
-  box-shadow: 5px 5px 0 #526f55;
-  font-size: 18px;
-  line-height: 1.6;
+  border:3px solid var(--line);
+  background:#e9f7d8;
+  padding:12px 8px;
+  text-align:center;
+  box-shadow:3px 3px 0 #173729;
+  font-size:16px;
 }
 
-.step.active {
-  background: #ffe17a;
-  border-color: #a45d27;
-  box-shadow: 5px 5px 0 #a45d27;
-  transform: translateY(-3px);
+.step.active { background:#ffe58a; }
+.step.done { background:#9ee3a0; }
+
+.game-layout {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 250px;
+  gap:16px;
 }
 
-.step.done {
-  background: #b9e78e;
+.machine-panel {
+  min-height:330px;
+  background:linear-gradient(#c8edb8,#8fca83);
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 
-.main {
-  display: grid;
-  grid-template-columns: 190px minmax(300px, 1fr) 245px;
-  gap: 16px;
+.machine {
+  width:190px;
+  height:125px;
+  margin:14px auto 20px;
+  position:relative;
+  border:7px solid #244b38;
+  background:#e2bd63;
+  box-shadow:8px 8px 0 #31583d;
 }
 
-.panel {
-  padding: 17px;
-  background: var(--cream);
-  border: var(--pixel-border);
-  box-shadow: 6px 6px 0 #526f55;
+.machine:before {
+  content:"";
+  position:absolute;
+  left:25px;
+  right:25px;
+  top:-35px;
+  height:28px;
+  background:#557e61;
+  border:6px solid #244b38;
 }
 
-.robot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  min-width: 0;
+.machine:after {
+  content:"";
+  position:absolute;
+  left:45px;
+  right:45px;
+  bottom:18px;
+  height:24px;
+  background:#557e61;
+  border:5px solid #244b38;
 }
 
-.robot h2 {
-  font-size: 19px;
-  margin: 10px 0;
-}
+.machine.stage2 { background:#e8a85b; }
+.machine.stage3 { background:#83b8cf; }
+.machine.stage3:after { background:#4b7990; }
 
-/* 픽셀 로봇 */
-.robotFace {
-  width: 125px;
-  height: 135px;
-  position: relative;
-  margin: 12px auto 20px;
-  background: #76c9ba;
-  border: 5px solid var(--dark);
-  box-shadow:
-    7px 7px 0 #487d71,
-    inset -8px -8px 0 #4ca18e;
-  image-rendering: pixelated;
-}
-
-.robotFace::before {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 15px;
-  top: -20px;
-  left: 48px;
-  background: #f5ce59;
-  border: 4px solid var(--dark);
-  box-shadow: 0 -9px 0 -2px var(--dark);
-}
-
-.robotFace::after {
-  content: "";
-  position: absolute;
-  width: 25px;
-  height: 12px;
-  bottom: -19px;
-  left: 45px;
-  background: #315b54;
-  border: 3px solid var(--dark);
-}
-
-.robot-eye {
-  position: absolute;
-  width: 17px;
-  height: 22px;
-  top: 37px;
-  background: #fff9d8;
-  border: 3px solid var(--dark);
-  box-shadow: inset -4px -4px 0 #a2d9c8;
-}
-
-.robot-eye.left {
-  left: 23px;
-}
-
-.robot-eye.right {
-  right: 23px;
-}
-
-.robot-mouth {
-  position: absolute;
-  width: 35px;
-  height: 8px;
-  bottom: 28px;
-  left: 40px;
-  background: var(--dark);
-  box-shadow:
-    -5px -5px 0 -2px var(--dark),
-    5px -5px 0 -2px var(--dark);
-}
-
-.robot-body {
-  position: relative;
-  width: 75px;
-  height: 35px;
-  margin: -12px auto 0;
-  background: #e8bb58;
-  border: 4px solid var(--dark);
-  box-shadow: inset -7px -6px 0 #bd8740;
-}
-
-.robot-body::before,
-.robot-body::after {
-  content: "";
-  position: absolute;
-  top: 5px;
-  width: 12px;
-  height: 23px;
-  background: #76c9ba;
-  border: 3px solid var(--dark);
-}
-
-.robot-body::before {
-  left: -20px;
-}
-
-.robot-body::after {
-  right: -20px;
-}
-
-#robotMessage {
-  width: 100%;
-  padding: 12px;
-  background: #fff0ad;
-  border: 3px solid var(--dark);
-  box-shadow: 4px 4px 0 #c49b44;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.center {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  min-width: 0;
-}
-
-/* 픽셀 공장 배경 */
-.factory {
-  position: relative;
-  min-height: 300px;
-  padding: 20px 14px;
-  overflow: hidden;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background:
-    linear-gradient(#8dd5e1 0 55%, #b9df8a 55% 75%, #609b59 75%);
-  border: 5px solid var(--dark);
-  box-shadow: 7px 7px 0 #526f55;
-}
-
-.factory::before {
-  content: "";
-  position: absolute;
-  width: 55px;
-  height: 18px;
-  top: 35px;
-  left: 10%;
-  background: #fff8df;
-  box-shadow:
-    12px -12px 0 #fff8df,
-    24px 0 0 #fff8df,
-    12px 12px 0 #fff8df,
-    190px 20px 0 #fff8df,
-    202px 8px 0 #fff8df,
-    214px 20px 0 #fff8df;
-}
-
-.factory::after {
-  content: "";
-  position: absolute;
-  height: 35px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #447d4c;
-  border-top: 5px solid var(--dark);
-}
-
-/* 픽셀 기계 */
-#factoryIcon {
-  position: relative;
-  z-index: 2;
-  width: 170px;
-  height: 110px;
-  margin: 15px auto 20px;
-  background: #e3b84f;
-  border: 5px solid var(--dark);
-  box-shadow:
-    7px 7px 0 #795b32,
-    inset -9px -9px 0 #bd8c3d;
-}
-
-.machine-window {
-  position: absolute;
-  width: 65px;
-  height: 42px;
-  top: 15px;
-  left: 47px;
-  background: #80cbd1;
-  border: 5px solid var(--dark);
-  box-shadow: inset -7px -5px 0 #5b9fa6;
-}
-
-.machine-window::before,
-.machine-window::after {
-  content: "";
-  position: absolute;
-  background: var(--dark);
-}
-
-.machine-window::before {
-  width: 5px;
-  height: 32px;
-  left: 23px;
-  top: 0;
-}
-
-.machine-window::after {
-  width: 50px;
-  height: 5px;
-  left: 0;
-  top: 14px;
-}
-
-.machine-control {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  bottom: 12px;
-  left: 20px;
-  background: #6ebc67;
-  border: 3px solid var(--dark);
-  box-shadow: 25px 0 0 -3px #f4d05c;
-}
-
-.machine-belt {
-  position: absolute;
-  width: 220px;
-  height: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -28px;
-  background: #4a5750;
-  border: 4px solid var(--dark);
-  box-shadow: 0 8px 0 #293e38;
-}
-
-.machine-belt::before {
-  content: "";
-  position: absolute;
-  left: 12px;
-  top: 3px;
-  width: 10px;
-  height: 5px;
-  background: #d4d8b2;
-  box-shadow:
-    35px 0 #d4d8b2,
-    70px 0 #d4d8b2,
-    105px 0 #d4d8b2,
-    140px 0 #d4d8b2,
-    175px 0 #d4d8b2;
-}
-
-#stageTitle {
-  z-index: 2;
-  margin: 8px 0;
-  color: #173f32;
-  font-size: 26px;
-  text-shadow: 2px 2px #fff3bd;
-}
-
-#mainMessage {
-  z-index: 2;
-  max-width: 90%;
-  margin: 5px 0 15px;
-  padding: 8px 12px;
-  background: #fff8df;
-  border: 3px solid var(--dark);
-  font-size: 17px;
-}
-
-/* 단계별 기계 색상 */
-.factory.stage-1 #factoryIcon {
-  background: #dc8d49;
-  box-shadow: 7px 7px 0 #80502f, inset -9px -9px 0 #b86c37;
-}
-
-.factory.stage-1 .machine-window {
-  background: #e6a94d;
-}
-
-.factory.stage-2 #factoryIcon {
-  background: #8baddc;
-  box-shadow: 7px 7px 0 #4c668b, inset -9px -9px 0 #6789ba;
-}
-
-.factory.stage-2 .machine-window {
-  background: #f3d16a;
-}
-
-.factory.stage-3 #factoryIcon {
-  background: #a5d879;
-  box-shadow: 7px 7px 0 #527a43, inset -9px -9px 0 #77b84f;
-}
-
-.progressBox {
-  padding: 15px;
-  background: var(--cream);
-  border: var(--pixel-border);
-  box-shadow: 5px 5px 0 #526f55;
-}
-
-.progressTop {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 10px;
-  font-size: 17px;
-}
-
-.progress {
-  height: 25px;
-  background: #d4d9bd;
-  border: 4px solid var(--dark);
-  overflow: hidden;
-}
-
-#progressBar {
-  width: 0%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    90deg,
-    #68b95d 0 15px,
-    #9bd477 15px 30px
-  );
-  transition: width .3s;
-}
-
-.log {
-  height: 110px;
-  margin-top: 10px;
-  overflow-y: auto;
-  padding: 12px;
-  background: #1d352e;
-  color: #b8ed9d;
-  border: 3px solid #0d211b;
-  font-family: monospace;
-  font-size: 12px;
-  line-height: 1.7;
-  overflow-wrap: anywhere;
+.machine-label {
+  font-family:"Press Start 2P",monospace;
+  font-size:10px;
+  line-height:1.8;
+  color:#244b38;
 }
 
 .stats {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
 }
 
 .stat {
-  padding: 13px 8px;
-  text-align: center;
-  background: #fff0b4;
-  border: 3px solid var(--dark);
-  box-shadow: 4px 4px 0 #b18a42;
+  background:var(--cream);
+  border:3px solid var(--line);
+  padding:13px;
+  text-align:center;
+  box-shadow:3px 3px 0 #173729;
 }
 
-.statTitle {
-  font-size: 14px;
-  color: #5b5336;
+.stat-title {
+  color:#62734e;
+  font-size:14px;
 }
 
-.statValue {
-  margin-top: 6px;
-  color: #285b3c;
-  font-size: 27px;
+.stat-value {
+  font-size:28px;
+  color:#245b3b;
+  margin-top:5px;
+}
+
+.progress-box { margin-top:14px; }
+
+.progress-top {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+  font-size:16px;
+}
+
+.progress {
+  height:18px;
+  background:#d7e4ce;
+  border:3px solid var(--line);
+}
+
+#progressBar,
+#progressBar2,
+#progressBar3 {
+  width:0%;
+  height:100%;
+  background:#65bd62;
+  transition:width .25s;
+}
+
+.log-panel { margin-top:14px; }
+
+.log {
+  height:90px;
+  overflow-y:auto;
+  background:#18352b;
+  color:#c9f0c7;
+  padding:10px;
+  font:12px monospace;
+  line-height:1.6;
+}
+
+.hint {
+  margin-top:12px;
+  padding:10px;
+  border:3px dashed #70956d;
+  background:#f5ffdc;
+  font-size:16px;
+  line-height:1.5;
 }
 
 .timer {
-  padding: 13px;
-  text-align: center;
-  background: #c5e9f1;
-  border: 3px solid var(--dark);
-  box-shadow: 4px 4px 0 #5b9eaa;
+  font-family:"Press Start 2P",monospace;
+  font-size:22px;
+  color:#27618b;
+  margin:8px 0;
 }
 
-#timerValue {
-  margin: 8px 0;
-  color: #245d79;
-  font-size: 38px;
+.ending {
+  text-align:center;
+  background:linear-gradient(#bce8f2,#d9f2bd);
 }
 
-#timerMessage {
-  font-size: 13px;
+.trophy {
+  font-size:70px;
+  margin:14px;
+  text-shadow:4px 4px #fff;
 }
 
-.bottom {
-  margin-top: 20px;
-  padding: 17px;
-  text-align: center;
-  background: var(--cream);
-  border: var(--pixel-border);
-  box-shadow: 5px 5px 0 #526f55;
-  font-size: 15px;
-  line-height: 1.7;
+.footer {
+  text-align:center;
+  margin-top:18px;
+  padding:12px;
+  background:#f7ffe9;
+  border:3px solid var(--line);
+  font-size:14px;
 }
 
-@media(max-width: 900px) {
-  .main {
-    grid-template-columns: 1fr 1fr;
+@media(max-width:720px) {
+  .game-layout { grid-template-columns:1fr; }
+  .stats { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .steps { gap:6px; }
+  .step { font-size:13px; }
+  .robot-row { align-items:flex-start; }
+  .robot-row .pixel-robot {
+    flex-basis:70px;
+    width:70px;
+    height:70px;
   }
-
-  .robot {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    gap: 20px;
-  }
-
-  .robotFace {
-    flex-shrink: 0;
-  }
-
-  .stats {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .timer {
-    grid-column: 1 / -1;
-  }
-}
-
-@media(max-width: 600px) {
-  body {
-    padding: 10px;
-  }
-
-  header {
-    padding: 12px;
-  }
-
-  h1 {
-    font-size: 27px;
-  }
-
-  .steps {
-    gap: 6px;
-  }
-
-  .step {
-    font-size: 14px;
-    padding: 10px 4px;
-  }
-
-  .main {
-    grid-template-columns: 1fr;
-  }
-
-  .robot {
-    grid-column: auto;
-    flex-direction: row;
-  }
-
-  .robotFace {
-    width: 90px;
-    height: 100px;
-    transform: scale(.85);
-    margin: 0;
-  }
-
-  .stats {
-    grid-column: auto;
-  }
-
-  .factory {
-    min-height: 290px;
-  }
-
-  #stageTitle {
-    font-size: 22px;
-  }
-
-  #mainMessage {
-    font-size: 15px;
-  }
+  .dialogue { font-size:16px; }
+  .hero { min-height:470px; }
 }
 </style>
 </head>
@@ -633,107 +477,272 @@ button:disabled {
 <div class="game">
 
 <header>
-  <h1>GREEN FACTORY</h1>
-  <div>
+  <div class="logo">GREEN FACTORY</div>
+  <div class="connection">
     <span id="connectionStatus">● 연결 대기 중</span>
     <button id="connectBtn" onclick="connectArduino()">아두이노 연결</button>
   </div>
 </header>
 
-<div class="steps">
-  <div class="step active" id="step1">STEP 1<br>플라스틱 분쇄</div>
-  <div class="step" id="step2">STEP 2<br>플라스틱 용융</div>
-  <div class="step" id="step3">STEP 3<br>압축 및 완성</div>
-</div>
-
-<div class="main">
-
-<section class="panel robot">
-  <div>
-    <div class="robotFace" id="robotFace">
-      <div class="robot-eye left"></div>
-      <div class="robot-eye right"></div>
-      <div class="robot-mouth"></div>
+<!-- 시작 화면 -->
+<section id="introScreen" class="screen active">
+  <div class="hero pixel-panel">
+    <div class="cloud one"></div>
+    <div class="cloud two"></div>
+    <div class="city">
+      <div class="building"></div>
+      <div class="building"></div>
+      <div class="building"></div>
+      <div class="building"></div>
+      <div class="building"></div>
+      <div class="building"></div>
     </div>
-    <div class="robot-body"></div>
-  </div>
 
-  <div>
-    <h2>FACTORY ROBOT</h2>
-    <div id="robotMessage">
-      아두이노를 연결하고<br>재활용 공정을 시작해 주세요!
+    <div class="hero-content">
+      <div class="eyebrow">A PIXEL RECYCLING ADVENTURE</div>
+      <div class="pixel-robot"></div>
+      <h1>GREEN<br>FACTORY</h1>
+      <p>
+        플라스틱으로 뒤덮인 도시를 구하라!<br>
+        멈춰 버린 재활용 공장을 다시 작동시켜 주세요.
+      </p>
+      <div class="small" id="introNotice">
+        먼저 아두이노를 연결해 주세요.
+      </div>
+      <div class="action-row">
+        <button class="yellow" id="startButton"
+          onclick="startStory()" disabled>
+          게임 시작
+        </button>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="center">
-
-  <div class="factory" id="factory">
-    <div id="factoryIcon">
-      <div class="machine-window"></div>
-      <div class="machine-control"></div>
-      <div class="machine-belt"></div>
+<!-- 스토리 화면 -->
+<section id="storyScreen" class="screen">
+  <div class="pixel-panel">
+    <div class="scene-title">
+      <div class="eyebrow">MISSION BRIEFING</div>
+      <h2>공장 로봇의 부탁</h2>
     </div>
 
-    <h2 id="stageTitle">플라스틱 분쇄 공정</h2>
-    <div id="mainMessage">버튼을 정확히 10번 눌러 주세요!</div>
-  </div>
-
-  <div class="progressBox">
-    <div class="progressTop">
-      <span>공정 진행률</span>
-      <strong id="progressText">0%</strong>
+    <div class="robot-row">
+      <div class="pixel-robot"></div>
+      <div class="dialogue">
+        <strong>FACTORY ROBOT</strong>
+        <div id="storyText">
+          안녕! 나는 그린 팩토리의 안내 로봇이야.
+        </div>
+      </div>
     </div>
-    <div class="progress">
-      <div id="progressBar"></div>
-    </div>
-  </div>
 
-  <div class="panel">
-    <strong>공정 기록</strong>
-    <div class="log" id="log">
-      GREEN FACTORY SYSTEM READY<br>
-      아두이노 연결을 기다리는 중...
+    <div class="action-row">
+      <button class="yellow" onclick="nextStory()">다음</button>
     </div>
   </div>
-
 </section>
 
-<section class="stats">
-
-  <div class="stat">
-    <div class="statTitle">분쇄 버튼 횟수</div>
-    <div class="statValue" id="countValue">0 / 10</div>
+<!-- 1단계: 분쇄 -->
+<section id="stage1Screen" class="screen">
+  <div class="steps">
+    <div class="step active">STEP 1<br>플라스틱 분쇄</div>
+    <div class="step">STEP 2<br>플라스틱 용융</div>
+    <div class="step">STEP 3<br>압축 및 완성</div>
   </div>
 
-  <div class="stat">
-    <div class="statTitle">현재 온도</div>
-    <div class="statValue" id="tempValue">-- ℃</div>
-  </div>
+  <div class="game-layout">
+    <div>
+      <div class="pixel-panel machine-panel">
+        <div class="eyebrow">STAGE 01 / SHREDDING</div>
+        <div class="machine"></div>
+        <div class="machine-label">PLASTIC SHREDDER</div>
+        <h2>플라스틱 분쇄 공정</h2>
+        <p>아두이노 버튼을 10번 눌러 플라스틱을 분쇄하세요!</p>
 
-  <div class="stat">
-    <div class="statTitle">기준 온도</div>
-    <div class="statValue" id="baseValue">-- ℃</div>
-  </div>
+        <div class="robot-row" style="width:100%;max-width:560px">
+          <div class="pixel-robot"></div>
+          <div class="dialogue" id="robotMessage1">
+            첫 번째 공정이야! 버튼을 10번 눌러 줘.
+          </div>
+        </div>
+      </div>
 
-  <div class="stat">
-    <div class="statTitle">목표 온도 (기준 +1℃)</div>
-    <div class="statValue" id="targetValue">-- ℃</div>
-  </div>
+      <div class="pixel-panel progress-box">
+        <div class="progress-top">
+          <span>전체 공정 진행률</span>
+          <strong id="progressText">0%</strong>
+        </div>
+        <div class="progress">
+          <div id="progressBar"></div>
+        </div>
+      </div>
 
-  <div class="timer">
-    <div class="statTitle">압축 감지 타이머</div>
-    <div id="timerValue">4.0</div>
-    <div id="timerMessage">감지 대기 중</div>
-  </div>
+      <div class="pixel-panel log-panel">
+        <strong>공정 기록</strong>
+        <div class="log" id="log">
+          GREEN FACTORY SYSTEM READY
+        </div>
+      </div>
+    </div>
 
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-title">분쇄 버튼 횟수</div>
+        <div class="stat-value" id="countValue">0 / 10</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">현재 공정</div>
+        <div class="stat-value" style="font-size:19px">분쇄</div>
+      </div>
+    </div>
+  </div>
 </section>
-</div>
 
-<div class="bottom">
-  GREEN FACTORY : 플라스틱 분쇄 → 용융 → 압축 → 재활용 완성
-  <br>
-  <span class="pixel-label">RECYCLE THE FUTURE!</span>
+<!-- 2단계: 용융 -->
+<section id="stage2Screen" class="screen">
+  <div class="steps">
+    <div class="step done">STEP 1<br>분쇄 완료</div>
+    <div class="step active">STEP 2<br>플라스틱 용융</div>
+    <div class="step">STEP 3<br>압축 및 완성</div>
+  </div>
+
+  <div class="game-layout">
+    <div>
+      <div class="pixel-panel machine-panel">
+        <div class="eyebrow">STAGE 02 / HEATING</div>
+        <div class="machine stage2"></div>
+        <div class="machine-label">MELTING CHAMBER</div>
+        <h2>플라스틱 용융 공정</h2>
+        <p>
+          현재 온도가 기준 온도보다 1℃ 높아지면
+          다음 공정으로 이동합니다.
+        </p>
+
+        <div class="robot-row" style="width:100%;max-width:560px">
+          <div class="pixel-robot"></div>
+          <div class="dialogue" id="robotMessage2">
+            분쇄 완료! 이제 온도 센서로 다음 공정을 진행하자.
+          </div>
+        </div>
+
+        <div class="hint">
+          ※ 온도 센서는 주변 공기 온도를 측정합니다.
+          게임 진행용 조건이며 실제 플라스틱을 가열하는 과정이 아닙니다.
+        </div>
+      </div>
+
+      <div class="pixel-panel progress-box">
+        <div class="progress-top">
+          <span>전체 공정 진행률</span>
+          <strong id="progressText2">33%</strong>
+        </div>
+        <div class="progress">
+          <div id="progressBar2" style="width:33%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-title">현재 온도</div>
+        <div class="stat-value" id="tempValue">-- ℃</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">기준 온도</div>
+        <div class="stat-value" id="baseValue">-- ℃</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">목표 온도 (+1℃)</div>
+        <div class="stat-value" id="targetValue">-- ℃</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3단계: 압축 -->
+<section id="stage3Screen" class="screen">
+  <div class="steps">
+    <div class="step done">STEP 1<br>분쇄 완료</div>
+    <div class="step done">STEP 2<br>용융 완료</div>
+    <div class="step active">STEP 3<br>압축 및 완성</div>
+  </div>
+
+  <div class="game-layout">
+    <div>
+      <div class="pixel-panel machine-panel">
+        <div class="eyebrow">STAGE 03 / PRESSING</div>
+        <div class="machine stage3"></div>
+        <div class="machine-label">HYDRAULIC PRESS</div>
+        <h2>플라스틱 압축 공정</h2>
+        <p>
+          초음파 센서 10cm 이내에 물체를
+          4초 동안 유지하세요!
+        </p>
+
+        <div class="robot-row" style="width:100%;max-width:560px">
+          <div class="pixel-robot"></div>
+          <div class="dialogue" id="robotMessage3">
+            마지막 공정이야! 물체를 센서 가까이에 가져가 줘.
+          </div>
+        </div>
+      </div>
+
+      <div class="pixel-panel progress-box">
+        <div class="progress-top">
+          <span>전체 공정 진행률</span>
+          <strong id="progressText3">66%</strong>
+        </div>
+        <div class="progress">
+          <div id="progressBar3" style="width:66%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-title">압축 감지 타이머</div>
+        <div class="timer" id="timerValue">4.0</div>
+        <div id="timerMessage">감지 대기 중</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">감지 조건</div>
+        <div class="stat-value" style="font-size:20px">10cm 이내</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">유지 시간</div>
+        <div class="stat-value" style="font-size:20px">4초</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 엔딩 -->
+<section id="endingScreen" class="screen">
+  <div class="pixel-panel ending">
+    <div class="eyebrow">MISSION COMPLETE</div>
+    <div class="trophy">★</div>
+    <h2>재활용 공정 완료!</h2>
+    <p>
+      축하합니다! 분쇄, 용융, 압축 공정을 모두 완료했어요.<br>
+      멈춰 있던 GREEN FACTORY가 다시 작동합니다!
+    </p>
+    <div class="pixel-robot"></div>
+    <div class="dialogue">
+      FACTORY ROBOT: 고마워! 이제 도시를 더 깨끗하게 만들 수 있겠어!
+    </div>
+    <div class="action-row">
+      <button class="yellow" onclick="restartNotice()">다시 플레이하기</button>
+    </div>
+    <div class="small">
+      다시 플레이하려면 아두이노의 RESET 버튼을 누른 뒤
+      페이지를 새로고침하고 다시 연결하세요.
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  GREEN FACTORY · 분쇄 → 용융 → 압축 → 재활용 완성
 </div>
 
 </div>
@@ -744,106 +753,109 @@ let reader;
 let currentStage = 0;
 let pressStart = null;
 let timerInterval = null;
+let arduinoReady = false;
+let gameStarted = false;
+let storyIndex = 0;
 
 const $ = id => document.getElementById(id);
 
+const storyLines = [
+  "안녕! 나는 그린 팩토리의 안내 로봇이야.",
+  "도시에 플라스틱 쓰레기가 너무 많이 쌓여서 재활용 공장이 멈춰 버렸어.",
+  "공장을 다시 작동시키려면 분쇄, 용융, 압축의 세 공정을 완료해야 해.",
+  "아두이노 센서와 버튼을 이용해서 공장을 다시 움직여 보자!"
+];
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  $(id).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
 function log(message) {
   const box = $("log");
+  if (!box) return;
+
   const line = document.createElement("div");
   line.textContent = message;
   box.appendChild(line);
   box.scrollTop = box.scrollHeight;
 }
 
-/* 로봇의 표정과 메시지 변경 */
-function robot(message, face = "normal") {
-  $("robotMessage").innerHTML = message;
+function startStory() {
+  if (!arduinoReady) {
+    $("introNotice").textContent =
+      "먼저 아두이노 연결 버튼을 눌러 연결해 주세요.";
+    return;
+  }
 
-  const robotFace = $("robotFace");
-  robotFace.dataset.face = face;
+  storyIndex = 0;
+  $("storyText").textContent = storyLines[storyIndex];
+  showScreen("storyScreen");
+}
 
-  const eyes = robotFace.querySelectorAll(".robot-eye");
-  const mouth = robotFace.querySelector(".robot-mouth");
+function nextStory() {
+  storyIndex++;
 
-  if (face === "happy" || face === "done") {
-    eyes.forEach(eye => eye.style.height = "10px");
-    mouth.style.width = "40px";
-  } else if (face === "working") {
-    eyes.forEach(eye => eye.style.background = "#f5d45f");
-    mouth.style.width = "25px";
+  if (storyIndex < storyLines.length) {
+    $("storyText").textContent = storyLines[storyIndex];
   } else {
-    eyes.forEach(eye => {
-      eye.style.height = "22px";
-      eye.style.background = "#fff9d8";
-    });
-    mouth.style.width = "35px";
+    gameStarted = true;
+    setStage(0);
+    showScreen("stage1Screen");
+    $("robotMessage1").textContent =
+      "첫 번째 공정이야! 아두이노 버튼을 10번 눌러 줘.";
   }
 }
 
-function updateProgress() {
-  let percent = 0;
+function setProgress(percent) {
+  const ids = ["progressBar","progressBar2","progressBar3"];
+  const textIds = ["progressText","progressText2","progressText3"];
 
-  if (currentStage === 0) {
-    const count = parseInt($("countValue").textContent) || 0;
-    percent = count / 10 * 100 / 3;
-  } else if (currentStage === 1) {
-    percent = 100 / 3;
-  } else if (currentStage === 2) {
-    percent = 200 / 3;
-  } else {
-    percent = 100;
-  }
+  ids.forEach(id => {
+    if ($(id)) $(id).style.width = percent + "%";
+  });
 
-  $("progressBar").style.width = percent + "%";
-  $("progressText").textContent = Math.floor(percent) + "%";
+  textIds.forEach(id => {
+    if ($(id)) $(id).textContent = Math.floor(percent) + "%";
+  });
 }
 
 function setStage(stage) {
   currentStage = stage;
 
-  for (let i = 1; i <= 3; i++) {
-    const el = $("step" + i);
-    el.classList.remove("active", "done");
-
-    if (i < stage + 1) el.classList.add("done");
-    if (i === stage + 1) el.classList.add("active");
-  }
-
-  const factory = $("factory");
-  factory.classList.remove("stage-1", "stage-2", "stage-3");
-  factory.classList.add("stage-" + stage);
-
   if (stage === 0) {
-    $("stageTitle").textContent = "플라스틱 분쇄 공정";
-    $("mainMessage").textContent = "버튼을 정확히 10번 눌러 주세요!";
+    const count = parseInt($("countValue").textContent) || 0;
+    setProgress(count / 10 * 100 / 3);
+
+    if (gameStarted) showScreen("stage1Screen");
   }
 
   if (stage === 1) {
-    $("stageTitle").textContent = "플라스틱 용융 공정";
-    $("mainMessage").textContent =
-      "기준 온도보다 1℃ 높아지면 다음 단계로 이동합니다.";
+    setProgress(33.33);
+    if (gameStarted) showScreen("stage2Screen");
   }
 
   if (stage === 2) {
-    $("stageTitle").textContent = "플라스틱 압축 공정";
-    $("mainMessage").textContent =
-      "센서 10cm 이내에서 물체를 4초간 유지하세요!";
+    setProgress(66.66);
+    if (gameStarted) showScreen("stage3Screen");
   }
 
   if (stage === 3) {
-    $("stageTitle").textContent = "재활용 공정 완료!";
-    $("mainMessage").textContent =
-      "모든 재활용 공정이 완료되었습니다!";
-    robot("모든 재활용 공정이<br>완료되었습니다!", "done");
+    setProgress(100);
+    if (gameStarted) showScreen("endingScreen");
   }
-
-  updateProgress();
 }
 
 function startTimer() {
   pressStart = Date.now();
+
   $("timerMessage").textContent = "물체 감지 중!";
-  robot("초음파 센서가 물체를 감지했어요!<br>4초 동안 유지하세요.", "working");
+  $("robotMessage3").textContent =
+    "센서가 물체를 감지했어! 4초 동안 그대로 유지해 줘.";
 
   if (timerInterval) clearInterval(timerInterval);
 
@@ -865,8 +877,11 @@ function cancelTimer() {
   if (timerInterval) clearInterval(timerInterval);
 
   $("timerValue").textContent = "4.0";
-  $("timerMessage").textContent = "감지가 끊겼습니다. 다시 시도하세요.";
-  robot("물체 감지가 끊겼어요.<br>다시 센서 가까이에 놓아 주세요.", "normal");
+  $("timerMessage").textContent =
+    "감지가 끊겼습니다. 다시 시도하세요.";
+
+  $("robotMessage3").textContent =
+    "감지가 끊겼어. 물체를 센서 가까이에 다시 놓아 줘.";
 }
 
 function completeGame() {
@@ -888,15 +903,23 @@ function processLine(line) {
   log(line);
 
   if (line === "SYSTEM_READY") {
-    robot("아두이노 연결 성공!<br>분쇄 공정을 시작하세요.", "normal");
+    arduinoReady = true;
+    $("connectionStatus").textContent = "● 아두이노 연결됨";
+    $("introNotice").textContent =
+      "연결 완료! 게임 시작을 눌러 주세요.";
+    $("startButton").disabled = false;
   }
 
   if (line === "STEP1_READY") {
-    setStage(0);
+    arduinoReady = true;
+    $("startButton").disabled = false;
+
+    if (gameStarted) setStage(0);
   }
 
   if (line === "CRUSH") {
-    robot("플라스틱 분쇄 중!", "working");
+    $("robotMessage1").textContent =
+      "플라스틱을 분쇄하고 있어!";
   }
 
   if (line.startsWith("COUNT:")) {
@@ -904,23 +927,31 @@ function processLine(line) {
 
     if (!isNaN(count)) {
       $("countValue").textContent = count + " / 10";
-      updateProgress();
+
+      if (currentStage === 0) {
+        setProgress(count / 10 * 100 / 3);
+      }
     }
   }
 
   if (line === "CRUSH_DONE") {
     $("countValue").textContent = "10 / 10";
-    updateProgress();
-    robot("버튼 10회 입력 완료!<br>분쇄 공정이 끝났습니다.", "happy");
+    setProgress(33.33);
+
+    $("robotMessage1").textContent =
+      "분쇄 공정 완료! 다음 공정으로 이동하자.";
   }
 
   if (line === "STEP2_READY") {
     setStage(1);
-    robot("분쇄 완료!<br>용융 공정을 시작합니다.", "working");
+
+    $("robotMessage2").textContent =
+      "분쇄 완료! 이제 온도 센서로 용융 공정을 진행하자.";
   }
 
   if (line.startsWith("TEMP:")) {
     const temp = parseFloat(line.split(":")[1]);
+
     if (!isNaN(temp)) {
       $("tempValue").textContent = temp.toFixed(1) + " ℃";
     }
@@ -928,6 +959,7 @@ function processLine(line) {
 
   if (line.startsWith("BASE_TEMP:")) {
     const temp = parseFloat(line.split(":")[1]);
+
     if (!isNaN(temp)) {
       $("baseValue").textContent = temp.toFixed(1) + " ℃";
     }
@@ -938,28 +970,24 @@ function processLine(line) {
 
     if (!isNaN(temp)) {
       $("targetValue").textContent = temp.toFixed(1) + " ℃";
-      $("mainMessage").textContent =
-        "기준 온도 " + $("baseValue").textContent +
-        " → 목표 온도 " + $("targetValue").textContent;
     }
   }
 
   if (line === "MELT_DONE") {
-    robot("목표 온도에 도달했습니다!<br>용융 공정 완료!", "happy");
+    $("robotMessage2").textContent =
+      "목표 온도에 도달했어! 용융 공정 완료!";
   }
 
   if (line === "STEP3_READY") {
     setStage(2);
-    robot("이제 압축 공정입니다!<br>센서에 물체를 가까이 대세요.", "working");
+
+    $("robotMessage3").textContent =
+      "마지막 공정이야! 물체를 센서 가까이에 가져가 줘.";
   }
 
-  if (line === "PRESS_START") {
-    startTimer();
-  }
+  if (line === "PRESS_START") startTimer();
 
-  if (line === "PRESS_CANCEL") {
-    cancelTimer();
-  }
+  if (line === "PRESS_CANCEL") cancelTimer();
 
   if (line === "PROCESS_DONE" || line === "ALL_COMPLETE") {
     completeGame();
@@ -968,25 +996,31 @@ function processLine(line) {
 
 async function connectArduino() {
   if (!("serial" in navigator)) {
-    alert("PC 크롬 또는 엣지 브라우저에서 접속해 주세요.");
+    alert("PC 크롬 또는 엣지 브라우저에서 GitHub Pages 주소로 접속해 주세요.");
     return;
   }
 
   try {
     port = await navigator.serial.requestPort();
-    await port.open({ baudRate: 9600 });
+    await port.open({baudRate:9600});
 
-    $("connectionStatus").textContent = "● 아두이노 연결됨";
+    $("connectionStatus").textContent = "● 연결됨";
     $("connectBtn").textContent = "연결됨";
     $("connectBtn").disabled = true;
 
-    robot("아두이노 연결 성공!<br>게임을 시작합니다.", "happy");
+    $("introNotice").textContent =
+      "아두이노 신호를 기다리는 중...";
 
     readSerial();
+
   } catch (error) {
     console.error(error);
+
     $("connectionStatus").textContent = "● 연결 실패";
-    alert("연결에 실패했습니다. 시리얼 모니터를 닫고 다시 시도해 주세요.");
+
+    alert(
+      "연결에 실패했습니다. 아두이노 IDE의 시리얼 모니터를 닫고 다시 연결해 주세요."
+    );
   }
 }
 
@@ -999,7 +1033,8 @@ async function readSerial() {
 
   try {
     while (true) {
-      const { value, done } = await reader.read();
+      const {value,done} = await reader.read();
+
       if (done) break;
 
       buffer += value;
@@ -1018,6 +1053,14 @@ async function readSerial() {
     reader.releaseLock();
     await closed.catch(() => {});
   }
+}
+
+function restartNotice() {
+  alert(
+    "아두이노 보드의 RESET 버튼을 누른 다음 이 페이지를 새로고침하고 다시 연결해 주세요."
+  );
+
+  location.reload();
 }
 </script>
 </body>

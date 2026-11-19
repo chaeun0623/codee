@@ -159,7 +159,7 @@ button:disabled {
   z-index: 10;
 }
 
-/* ---------------- 픽셀 로봇 ---------------- */
+/* 로봇 캐릭터 */
 
 .pixel-bot {
   position: relative;
@@ -274,7 +274,7 @@ button:disabled {
   50% { transform: translateY(-4px); }
 }
 
-/* 로봇 스토리텔링 영역 */
+/* 로봇 대화 */
 
 .story-character {
   position: absolute;
@@ -324,7 +324,125 @@ button:disabled {
   to { height: 12px; }
 }
 
-/* ---------------- STEP 1 ---------------- */
+/* 시작 화면 */
+
+.intro {
+  text-align: center;
+  padding: 35px 20px;
+  background: #87aa69;
+  min-height: 550px;
+  color: #fff1c9;
+}
+
+.intro h1 {
+  font-size: clamp(28px,5vw,42px);
+  line-height: 1.5;
+  text-shadow: 5px 5px #426b43;
+}
+
+.intro p {
+  font-size: 21px;
+  line-height: 1.8;
+  text-shadow: 2px 2px #426b43;
+}
+
+/* 첫 화면 하단 대사 가독성 개선 */
+.intro .dialogue {
+  color: #343b43;
+  background: #fff8df;
+  font-weight: bold;
+  border-color: #343b43;
+}
+
+/* 스토리 도입부 */
+
+.story-screen {
+  min-height: 550px;
+  padding: 30px 20px;
+  text-align: center;
+  color: #fff0c9;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 39px,
+      rgba(255,255,255,.04) 40px 42px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 39px,
+      rgba(255,255,255,.04) 40px 42px
+    ),
+    #63875b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.story-title {
+  font-size: 25px;
+  line-height: 1.6;
+  text-shadow: 4px 4px #354d37;
+  margin: 5px 0 15px;
+}
+
+.story-scene {
+  width: min(620px, 95%);
+  min-height: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px auto;
+  background: rgba(35,48,39,.35);
+  border: 4px solid #344b39;
+  overflow: hidden;
+}
+
+.story-factory {
+  font-size: 65px;
+  line-height: 1.5;
+  animation: factoryFloat 1.2s steps(3) infinite;
+}
+
+@keyframes factoryFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+.story-text {
+  width: min(650px, 95%);
+  min-height: 115px;
+  padding: 18px;
+  margin: 12px auto;
+  background: #fff0c9;
+  color: #343b43;
+  border: 5px solid #343b43;
+  box-shadow: 5px 5px 0 #28352b;
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+.story-text.speaking {
+  animation: storyPop .25s steps(3);
+}
+
+@keyframes storyPop {
+  from { transform: scale(.96); }
+  to { transform: scale(1); }
+}
+
+.story-progress {
+  margin: 8px;
+  font-size: 15px;
+  color: #fff0c9;
+}
+
+.story-next {
+  margin-top: 12px;
+  min-width: 190px;
+}
+
+/* STEP 1 */
 
 #stage1 .scene {
   background-color: #9a7957;
@@ -550,7 +668,7 @@ button:disabled {
   display: block;
 }
 
-/* ---------------- STEP 2 ---------------- */
+/* STEP 2 - 플라스틱 용융(녹이기) */
 
 #stage2 .scene {
   background-color: #493c3a;
@@ -679,27 +797,42 @@ button:disabled {
 }
 
 #stage2.melting.melt-step-1 .melted-object {
-  top: 48px; height: 40px; width: 48%; left: 26%;
+  top: 48px;
+  height: 40px;
+  width: 48%;
+  left: 26%;
   background: #68a99d;
 }
 
 #stage2.melting.melt-step-2 .melted-object {
-  top: 62px; height: 34px; width: 46%; left: 27%;
+  top: 62px;
+  height: 34px;
+  width: 46%;
+  left: 27%;
   background: #91a66f;
 }
 
 #stage2.melting.melt-step-3 .melted-object {
-  top: 76px; height: 27px; width: 52%; left: 24%;
+  top: 76px;
+  height: 27px;
+  width: 52%;
+  left: 24%;
   background: #c58b4b;
 }
 
 #stage2.melting.melt-step-4 .melted-object {
-  top: 91px; height: 21px; width: 56%; left: 22%;
+  top: 91px;
+  height: 21px;
+  width: 56%;
+  left: 22%;
   background: #e17a35;
 }
 
 #stage2.melting.melt-step-5 .melted-object {
-  top: 108px; height: 16px; width: 62%; left: 19%;
+  top: 108px;
+  height: 16px;
+  width: 62%;
+  left: 19%;
   background: #f08a37;
   border-color: #a94c2c;
   border-radius: 45%;
@@ -714,7 +847,7 @@ button:disabled {
   width: min(82%, 420px);
   padding: 15px 18px;
   color: #fff0c9;
-  background: rgba(35, 35, 39, .94);
+  background: rgba(35,35,39,.94);
   border: 4px solid #f4ce75;
   text-align: center;
   font-size: 19px;
@@ -725,11 +858,11 @@ button:disabled {
 .temp-waiting[hidden] { display: none; }
 
 @keyframes waitBlink {
-  0%, 100% { opacity: 1; }
+  0%,100% { opacity: 1; }
   50% { opacity: .78; }
 }
 
-/* ---------------- STEP 3 ---------------- */
+/* STEP 3 */
 
 #stage3 .scene {
   background-color: #829e76;
@@ -828,7 +961,7 @@ button:disabled {
   transition: height .08s linear;
 }
 
-/* ---------------- 공통 UI ---------------- */
+/* 공통 정보창 */
 
 .info-panel {
   position: absolute;
@@ -881,31 +1014,10 @@ button:disabled {
   min-height: 65px;
   font-size: 20px;
   line-height: 1.6;
+  color: #343b43;
 }
 
-/* ---------------- 시작 화면 ---------------- */
-
-.intro {
-  text-align: center;
-  padding: 35px 20px;
-  background: #87aa69;
-  min-height: 550px;
-  color: #fff1c9;
-}
-
-.intro h1 {
-  font-size: clamp(28px,5vw,42px);
-  line-height: 1.5;
-  text-shadow: 5px 5px #426b43;
-}
-
-.intro p {
-  font-size: 21px;
-  line-height: 1.8;
-  text-shadow: 2px 2px #426b43;
-}
-
-/* ---------------- 엔딩 화면 ---------------- */
+/* 엔딩 */
 
 .ending {
   text-align: center;
@@ -1004,6 +1116,22 @@ button:disabled {
   .dialogue { font-size: 17px; }
   .logo { font-size: 13px; }
   button { font-size: 15px; padding: 11px; }
+
+  .story-screen {
+    padding: 20px 10px;
+  }
+
+  .story-title {
+    font-size: 21px;
+  }
+
+  .story-text {
+    font-size: 16px;
+  }
+
+  .story-factory {
+    font-size: 48px;
+  }
 }
 </style>
 </head>
@@ -1040,13 +1168,49 @@ button:disabled {
       <h1>GREEN<br>FACTORY</h1>
       <p>PLASTIC RECYCLING ADVENTURE</p>
       <p id="introMessage">먼저 아두이노를 연결해 주세요.</p>
+
       <div class="dialogue" id="introDialogue">
         로봇: 안녕! 나는 그린 팩토리의 재활용 로봇이야.
         나와 함께 플라스틱을 새로운 자원으로 만들어 보자!
       </div>
+
       <button id="startButton" onclick="startGame()" disabled>
         START GAME
       </button>
+    </div>
+  </div>
+</section>
+
+<!-- 스토리 도입부 -->
+<section id="storyScreen" class="screen">
+  <div class="game-frame">
+    <div class="story-screen">
+
+      <div class="stage-number">GREEN FACTORY STORY</div>
+
+      <h1 class="story-title" id="storyTitle">
+        새로운 모험의 시작!
+      </h1>
+
+      <div class="story-scene" id="storyScene">
+        <div class="story-factory">🤖</div>
+      </div>
+
+      <div class="story-text" id="storyText">
+        안녕! 나는 그린 팩토리의 재활용 로봇이야!
+      </div>
+
+      <div class="story-progress" id="storyProgress">
+        STORY 1 / 4
+      </div>
+
+      <button
+        class="story-next"
+        id="storyNextButton"
+        onclick="nextStory()">
+        NEXT ▶
+      </button>
+
     </div>
   </div>
 </section>
@@ -1098,7 +1262,7 @@ button:disabled {
           <div class="bot-leg right"></div>
         </div>
         <div class="story-bubble" id="robotMessage1">
-          안녕! 먼저 버튼을 눌러 플라스틱을 잘게 부숴 보자!
+          첫 번째 공정이야! 버튼을 눌러 플라스틱을 분쇄해 보자!
         </div>
       </div>
     </div>
@@ -1122,7 +1286,7 @@ button:disabled {
   <div class="game-frame stage-screen">
 
     <div class="stage-header">
-      <div class="stage-name">STEP 02<br>플라스틱 용융</div>
+      <div class="stage-name">STEP 02<br>플라스틱 용융(녹이기)</div>
       <div class="stage-number">02 / 03</div>
     </div>
 
@@ -1130,7 +1294,8 @@ button:disabled {
       <div class="scene-caption">HIGH TEMPERATURE FURNACE</div>
 
       <div class="temp-waiting" id="tempWaiting">
-        온도 데이터를 불러오고 있어요.<br>잠시만 기다려 주세요!
+        온도 데이터를 불러오고 있어요.<br>
+        잠시만 기다려 주세요!
       </div>
 
       <div class="furnace">
@@ -1159,7 +1324,7 @@ button:disabled {
           <div class="bot-leg right"></div>
         </div>
         <div class="story-bubble" id="robotMessage2">
-          이번에는 플라스틱을 녹여 보자! 온도가 올라가는지 확인해 줘.
+          이번에는 플라스틱을 녹여 보자!
         </div>
       </div>
     </div>
@@ -1276,6 +1441,8 @@ button:disabled {
 </div>
 
 <script>
+/* 기본 상태 */
+
 let port = null;
 let reader = null;
 let connected = false;
@@ -1293,7 +1460,9 @@ let pressStart = null;
 
 const $ = id => document.getElementById(id);
 
+
 /* 화면 전환 */
+
 function showScreen(id) {
   document.querySelectorAll(".screen").forEach(el => {
     el.classList.remove("active");
@@ -1302,7 +1471,9 @@ function showScreen(id) {
   $(id).classList.add("active");
 }
 
-/* 로봇 대사 및 말하기 애니메이션 */
+
+/* 로봇 대사 */
+
 function robotSpeak(robotId, messageId, message) {
   const robot = $(robotId);
   const bubble = $(messageId);
@@ -1313,35 +1484,114 @@ function robotSpeak(robotId, messageId, message) {
   robot.classList.add("talking");
 
   clearTimeout(robot.talkTimer);
+
   robot.talkTimer = setTimeout(() => {
     robot.classList.remove("talking");
   }, 1200);
 }
 
-/* 게임 시작 */
+
+/* 스토리 도입부 */
+
+let storyIndex = 0;
+
+const storyData = [
+  {
+    title: "새로운 모험의 시작!",
+    scene: "🤖",
+    text: "안녕! 나는 그린 팩토리의 재활용 로봇이야! 오늘 나와 함께 특별한 임무를 수행해 볼래?"
+  },
+  {
+    title: "위기에 빠진 공장",
+    scene: "🏭 🗑️",
+    text: "큰일이야! 우리 공장에 플라스틱 쓰레기가 너무 많이 쌓여 버렸어. 이대로 두면 환경에도 좋지 않을 거야."
+  },
+  {
+    title: "플라스틱의 새로운 탄생",
+    scene: "♻️ 🌱",
+    text: "하지만 걱정하지 마! 플라스틱도 올바른 재활용 과정을 거치면 새로운 자원으로 다시 태어날 수 있어!"
+  },
+  {
+    title: "우리의 재활용 미션!",
+    scene: "⚙️ 🔥 🏭",
+    text: "우리에게 필요한 공정은 세 가지야! 플라스틱 분쇄, 플라스틱 용융(녹이기), 그리고 압축! 모든 공정을 성공시켜 공장을 구해 보자!"
+  }
+];
+
+/* 게임 시작 후 스토리부터 표시 */
+
 function startGame() {
   if (!connected) return;
 
   gameStarted = true;
+  currentStage = 0;
+  storyIndex = 0;
+
+  showStory();
+  showScreen("storyScreen");
+}
+
+/* 스토리 장면 표시 */
+
+function showStory() {
+  const story = storyData[storyIndex];
+
+  $("storyTitle").textContent = story.title;
+
+  $("storyScene").innerHTML =
+    '<div class="story-factory">' + story.scene + '</div>';
+
+  $("storyText").textContent = story.text;
+
+  $("storyText").classList.remove("speaking");
+  void $("storyText").offsetWidth;
+  $("storyText").classList.add("speaking");
+
+  $("storyProgress").textContent =
+    "STORY " + (storyIndex + 1) + " / " + storyData.length;
+
+  if (storyIndex === storyData.length - 1) {
+    $("storyNextButton").textContent = "START MISSION!";
+  } else {
+    $("storyNextButton").textContent = "NEXT ▶";
+  }
+}
+
+/* 다음 이야기 */
+
+function nextStory() {
+  if (storyIndex < storyData.length - 1) {
+    storyIndex++;
+    showStory();
+  } else {
+    beginStageOne();
+  }
+}
+
+/* 스토리 종료 후 STEP 1 */
+
+function beginStageOne() {
   currentStage = 1;
 
   $("stage1").classList.remove("done");
   $("crushCount").textContent = "0 / 10";
   $("crushBar").style.width = "0%";
 
+  $("crushDialogue").textContent =
+    "로봇: 첫 번째 공정 시작! 버튼을 10번 눌러 플라스틱을 분쇄해 보자!";
+
   robotSpeak(
     "robot1",
     "robotMessage1",
-    "좋아! 첫 번째 공정이야. 버튼을 10번 눌러 플라스틱을 분쇄해 보자!"
+    "드디어 시작이야! 버튼을 10번 눌러 플라스틱을 분쇄해 줘!"
   );
-
-  $("crushDialogue").textContent =
-    "로봇: 첫 번째 공정 시작! 버튼을 누를 때마다 플라스틱이 부서져.";
 
   showScreen("stage1");
 }
 
-/* 망치질 애니메이션 */
+
+/* STEP 1 - 분쇄 */
+
 function playHammer() {
   const area = $("crushArea");
 
@@ -1354,34 +1604,41 @@ function playHammer() {
   }, 350);
 }
 
-/* 용융 애니메이션 */
+
+/* STEP 2 - 용융 */
+
 function startMelting() {
   $("stage2").classList.add("melting");
 }
 
-/* 온도 데이터 대기 안내 */
 function showTemperatureWaiting(show) {
   $("tempWaiting").hidden = !show;
 }
 
-/* 용융 진행률 업데이트 */
 function updateMelting() {
   if (currentTemp === null) {
     showTemperatureWaiting(true);
     return;
   }
 
-  $("currentTemp").textContent = currentTemp.toFixed(1) + " ℃";
+  $("currentTemp").textContent =
+    currentTemp.toFixed(1) + " ℃";
 
   if (baseTemp !== null) {
-    $("baseTempDisplay").textContent = baseTemp.toFixed(1) + " ℃";
+    $("baseTempDisplay").textContent =
+      baseTemp.toFixed(1) + " ℃";
   }
 
   if (targetTemp !== null) {
-    $("targetTemp").textContent = targetTemp.toFixed(1) + " ℃";
+    $("targetTemp").textContent =
+      targetTemp.toFixed(1) + " ℃";
   }
 
-  if (baseTemp === null || targetTemp === null || meltStartTemp === null) {
+  if (
+    baseTemp === null ||
+    targetTemp === null ||
+    meltStartTemp === null
+  ) {
     showTemperatureWaiting(true);
     return;
   }
@@ -1389,14 +1646,20 @@ function updateMelting() {
   showTemperatureWaiting(false);
 
   const difference = targetTemp - meltStartTemp;
+
   if (difference <= 0) return;
 
-  const ratio = Math.max(0, Math.min(1,
-    (currentTemp - meltStartTemp) / difference
-  ));
+  const ratio = Math.max(
+    0,
+    Math.min(1, (currentTemp - meltStartTemp) / difference)
+  );
 
   const percent = Math.round(ratio * 100);
-  const step = Math.min(5, Math.floor(ratio * 5 + 0.000001));
+
+  const step = Math.min(
+    5,
+    Math.floor(ratio * 5 + 0.000001)
+  );
 
   $("liquid").style.height = (20 + ratio * 65) + "%";
   $("meltBar").style.width = percent + "%";
@@ -1428,21 +1691,26 @@ function updateMelting() {
     const message = messages[step];
 
     $("meltDialogue").textContent = "로봇: " + message;
-    robotSpeak("robot2", "robotMessage2", message);
 
-  } else if (step === 0) {
-    $("meltDialogue").textContent =
-      "로봇: 현재 온도에서 목표 온도까지 가열 중이야!";
+    robotSpeak(
+      "robot2",
+      "robotMessage2",
+      message
+    );
   }
 }
 
-/* 압축 시작 */
+
+/* STEP 3 - 압축 */
+
 function startPress() {
   if (pressStart !== null) return;
 
   pressStart = Date.now();
 
-  if (timerInterval) clearInterval(timerInterval);
+  if (timerInterval) {
+    clearInterval(timerInterval);
+  }
 
   robotSpeak(
     "robot3",
@@ -1457,12 +1725,20 @@ function startPress() {
     const ratio = Math.min(1, elapsed / 4);
     const remain = Math.max(0, 4 - elapsed);
 
-    $("pressTimer").textContent = remain.toFixed(1) + " SEC";
-    $("pressBar").style.width = (ratio * 100) + "%";
+    $("pressTimer").textContent =
+      remain.toFixed(1) + " SEC";
 
-    $("pressPlate").style.top = (125 + ratio * 105) + "px";
-    $("pressRod").style.height = (85 + ratio * 105) + "px";
-    $("pressMaterial").style.height = (60 - ratio * 35) + "px";
+    $("pressBar").style.width =
+      (ratio * 100) + "%";
+
+    $("pressPlate").style.top =
+      (125 + ratio * 105) + "px";
+
+    $("pressRod").style.height =
+      (85 + ratio * 105) + "px";
+
+    $("pressMaterial").style.height =
+      (60 - ratio * 35) + "px";
 
     const percent = Math.round(ratio * 100);
 
@@ -1470,11 +1746,23 @@ function startPress() {
       "로봇: 압축 중이야! " + percent + "% 진행됐어!";
 
     if (percent >= 25 && percent < 50) {
-      robotSpeak("robot3", "robotMessage3", "잘하고 있어! 조금만 더 유지해 줘!");
+      robotSpeak(
+        "robot3",
+        "robotMessage3",
+        "잘하고 있어! 조금만 더 유지해 줘!"
+      );
     } else if (percent >= 50 && percent < 75) {
-      robotSpeak("robot3", "robotMessage3", "절반 이상 완료했어! 계속 힘내!");
+      robotSpeak(
+        "robot3",
+        "robotMessage3",
+        "절반 이상 완료했어! 계속 힘내!"
+      );
     } else if (percent >= 75 && percent < 100) {
-      robotSpeak("robot3", "robotMessage3", "거의 다 됐어! 마지막까지 유지해 줘!");
+      robotSpeak(
+        "robot3",
+        "robotMessage3",
+        "거의 다 됐어! 마지막까지 유지해 줘!"
+      );
     }
 
     if (ratio >= 1) {
@@ -1485,6 +1773,7 @@ function startPress() {
 }
 
 /* 압축 취소 */
+
 function cancelPress() {
   pressStart = null;
 
@@ -1510,7 +1799,9 @@ function cancelPress() {
   );
 }
 
-/* 전체 공정 완료 */
+
+/* 게임 완료 */
+
 function finishGame() {
   if (currentStage !== 3) return;
 
@@ -1524,7 +1815,9 @@ function finishGame() {
   showScreen("endingScreen");
 }
 
-/* 아두이노 신호 처리 */
+
+/* 아두이노 시리얼 신호 처리 */
+
 function processLine(line) {
   line = line.trim();
 
@@ -1538,7 +1831,9 @@ function processLine(line) {
     $("connectionStatus").textContent = "● CONNECTED";
     $("connectBtn").textContent = "CONNECTED";
     $("connectBtn").disabled = true;
-    $("introMessage").textContent = "아두이노 연결 완료!";
+
+    $("introMessage").textContent =
+      "아두이노 연결 완료!";
 
     $("introDialogue").textContent =
       "로봇: 아두이노 연결 성공! 이제 나와 함께 재활용 공장을 운영해 보자!";
@@ -1547,8 +1842,7 @@ function processLine(line) {
   }
 
   if (line === "STEP1_READY") {
-    if (gameStarted) {
-      currentStage = 1;
+    if (gameStarted && currentStage === 1) {
       showScreen("stage1");
     }
   }
@@ -1572,8 +1866,11 @@ function processLine(line) {
     const count = parseInt(line.split(":")[1]);
 
     if (!isNaN(count)) {
-      $("crushCount").textContent = count + " / 10";
-      $("crushBar").style.width = (count / 10 * 100) + "%";
+      $("crushCount").textContent =
+        count + " / 10";
+
+      $("crushBar").style.width =
+        (count / 10 * 100) + "%";
     }
   }
 
@@ -1600,6 +1897,7 @@ function processLine(line) {
     lastMeltStep = 0;
 
     $("meltBar").style.width = "0%";
+
     $("currentTemp").textContent = "-- ℃";
     $("baseTempDisplay").textContent = "-- ℃";
     $("targetTemp").textContent = "-- ℃";
@@ -1640,7 +1938,10 @@ function processLine(line) {
 
     if (!isNaN(value)) {
       baseTemp = value;
-      $("baseTempDisplay").textContent = value.toFixed(1) + " ℃";
+
+      $("baseTempDisplay").textContent =
+        value.toFixed(1) + " ℃";
+
       updateMelting();
     }
   }
@@ -1653,7 +1954,9 @@ function processLine(line) {
       meltStartTemp = currentTemp;
       lastMeltStep = 0;
 
-      $("targetTemp").textContent = value.toFixed(1) + " ℃";
+      $("targetTemp").textContent =
+        value.toFixed(1) + " ℃";
+
       updateMelting();
 
       robotSpeak(
@@ -1668,7 +1971,12 @@ function processLine(line) {
     showTemperatureWaiting(false);
 
     $("meltBar").style.width = "100%";
-    $("stage2").classList.add("melting", "melt-step-5");
+
+    $("stage2").classList.add(
+      "melting",
+      "melt-step-5"
+    );
+
     $("liquid").style.height = "85%";
 
     $("meltDialogue").textContent =
@@ -1718,7 +2026,9 @@ function processLine(line) {
   }
 }
 
+
 /* 아두이노 연결 */
+
 async function connectArduino() {
   if (!("serial" in navigator)) {
     alert("PC 크롬 또는 엣지 브라우저에서 접속해 주세요.");
@@ -1734,9 +2044,21 @@ async function connectArduino() {
 
     connected = true;
 
-    $("connectionStatus").textContent = "● CONNECTED";
-    $("connectBtn").textContent = "CONNECTED";
+    $("connectionStatus").textContent =
+      "● CONNECTED";
+
+    $("connectBtn").textContent =
+      "CONNECTED";
+
     $("connectBtn").disabled = true;
+
+    $("introMessage").textContent =
+      "아두이노 연결 완료!";
+
+    $("introDialogue").textContent =
+      "로봇: 연결 성공! 이제 우리 공장을 구하러 가자!";
+
+    $("startButton").disabled = false;
 
     readSerial();
 
@@ -1749,10 +2071,15 @@ async function connectArduino() {
   }
 }
 
+
 /* 시리얼 데이터 읽기 */
+
 async function readSerial() {
   const decoder = new TextDecoderStream();
-  const closed = port.readable.pipeTo(decoder.writable);
+
+  const closed = port.readable.pipeTo(
+    decoder.writable
+  );
 
   reader = decoder.readable.getReader();
 
